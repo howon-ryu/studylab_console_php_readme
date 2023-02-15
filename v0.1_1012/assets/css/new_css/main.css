@@ -1,0 +1,11 @@
+.mainPage{
+    
+    display: flex;
+    align-items: center;
+    text-align: center;
+    
+    height : 86vh;
+}
+.mainPage span{
+    margin-left: 45%;
+}

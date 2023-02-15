@@ -1,0 +1,199 @@
+.card .card-header .arrayFilter .card-toolbar {
+
+  margin: 0 !important;
+
+}
+
+.no-footer .row {
+  display: none;
+}
+
+.card__left_tab .nav-item {
+
+  float: right;
+  margin-left: 390px !important;
+}
+
+.button {
+  background-color: #F9B514;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.modal_manage {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal_manage .bg {
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+.modalBox_manage {
+  position: absolute;
+  background-color: #fff;
+  width: 550px;
+  height: 350px;
+  padding: 15px;
+}
+
+.modalBox_manage button {
+  display: block;
+  width: 80px;
+  margin: 0 auto;
+}
+
+.modalBox_manage button#kt_modal_add_event_submit {
+  display: block;
+  width: 80px;
+  margin-left: 0;
+}
+
+.hidden {
+  display: none;
+}
+
+.modal_content {
+
+  margin-top: 10px;
+}
+
+
+.modal_content .form-control-solid {
+
+  margin-top: 10px;
+}
+
+
+.modal-footer {
+  margin-top: 20px;
+}
+
+
+.card__left tbody tr:hover {
+  background-color: #cbe6f5 !important;
+}
+
+
+.form_color {
+  background-color: #ffffff !important;
+  border-color: #E4E6EF !important;
+}
+
+
+.nowTimeBlue {
+  color: #009ef7 !important;
+}
+
+
+
+.openBtn_add {
+
+  float: right !important;
+  margin-left: 630px;
+
+  /* position: absolute; */
+}
+
+.studentDayReport th {
+
+  color: #7E8299 !important;
+}
+
+.fc-event-time {
+  display: none;
+}
+
+.input_50 .input_75 {
+  display: inline-block;
+  width: 75% !important;
+}
+
+.addressbtn {
+  margin-bottom: 5px !important;
+}
+
+.boardBtn {
+
+
+  margin-left: 15px;
+}
+
+.boardGroup {
+
+  margin-left: 5px;
+  margin-top: 14px;
+  width : 150px;
+}
+
+.boardRoom {
+
+  margin-left: 15px;
+  width : 140px;
+  margin-top: 14px;
+}
+
+.boardGroup .select2-selection__clear {
+
+  top: 40% !important;
+  
+
+}
+
+.boardRoom .select2-selection__clear {
+
+  top: 40% !important;
+
+}
+
+
+.logo_css {
+  padding-left: 30px;
+  padding-top: 30px;
+  padding-bottom: 10px;
+}
+
+
+.hidden {
+  display: none !important;
+}
+
+.infilter_nonestatus .select2-selection__clear {
+
+  top: 40% !important;
+
+}
+
+
+
+
+/* 왜 도대체 "학습항목이 필요합니다." 는 원래 2개가 들어가있을까? */
+.enen div:nth-child(4) {
+  display: none;
+
+}
+
+@media screen and (max-width: 1800px) {
+  .card__left_tab .nav-item {
+
+    float: right;
+    margin-left: 330px !important;
+  }
+
+  .openBtn_add {
+
+    float: right !important;
+    margin-left: 550px;
+
+    /* position: absolute; */
+  }
+}
