@@ -137,7 +137,7 @@
                             <!--begin::Header-->
                             <div class="card-header border-0 pt-5 card_l_h">
                               <!--begin::Tab nav-->
-                              <ul class="nav mb-2 mb-sm-0 card__left_tab">
+                              <ul class="nav mb-2 mb-sm-0 card__left_tab filter_ul">
                                 
                                 <li class = "arrayFilter">
                                     <div class="card-toolbar">
@@ -449,13 +449,20 @@
                         <!--begin::Card header-->
                         <div class="card-header py-7">
                           <!--begin::Tabs-->
-                          <div class="card-title mb-0 gap-4 gap-lg-8 gap-xl-10 nav nav-tabs border-bottom-0" data-kt-table-widget-3="tabs_nav">
-                            <div class="fs-4 fw-bold pb-3 border-3 border-primary cursor-pointer right__tab_btn right__tab01_btn on" data-kt-table-widget-3="tab" data-kt-table-widget-3-value="Show All">상세정보</div>
-                            <div class="fs-4 fw-bold text-muted pb-3 cursor-pointer right__tab_btn right__tab02_btn" data-kt-table-widget-3="tab" data-kt-table-widget-3-value="Pending">관리그룹</div>
-                            <div class="fs-4 fw-bold text-muted pb-3 cursor-pointer right__tab_btn right__tab03_btn" data-kt-table-widget-3="tab" data-kt-table-widget-3-value="Pending">학습실</div>
-                            <button class = "btn btn-sm btn-primary openBtn_add" style = "visibility:hidden">추가</button>
-                            <!-- <div class="fs-4 fw-bold text-muted pb-3 cursor-pointer right__tab_btn right__tab04_btn" data-kt-table-widget-3="tab" data-kt-table-widget-3-value="Pending">알림톡 설정</div> -->
+                          <div class= "flex1">
+                            <div class="card-title mb-0 gap-4 gap-lg-8 gap-xl-10 nav nav-tabs border-bottom-0" data-kt-table-widget-3="tabs_nav">
+                              
+                                <div class="fs-4 fw-bold pb-3 border-3 border-primary cursor-pointer right__tab_btn right__tab01_btn on" data-kt-table-widget-3="tab" data-kt-table-widget-3-value="Show All">상세정보</div>
+                                <div class="fs-4 fw-bold text-muted pb-3 cursor-pointer right__tab_btn right__tab02_btn" data-kt-table-widget-3="tab" data-kt-table-widget-3-value="Pending">관리그룹</div>
+                                <div class="fs-4 fw-bold text-muted pb-3 cursor-pointer right__tab_btn right__tab03_btn" data-kt-table-widget-3="tab" data-kt-table-widget-3-value="Pending">학습실</div>
+                              
+                              
+                              <!-- <div class="fs-4 fw-bold text-muted pb-3 cursor-pointer right__tab_btn right__tab04_btn" data-kt-table-widget-3="tab" data-kt-table-widget-3-value="Pending">알림톡 설정</div> -->
+                            </div>
                           </div>
+                          <div class = "flex2">
+                              <button class = "btn btn-sm btn-primary openBtn_add" style = "visibility:hidden">추가</button>
+                            </div>
                           
                           <!--end::Tabs-->
                         </div>
@@ -786,7 +793,7 @@
                         <!--begin::Card footer-->
                         <div class="card-footer d-flex justify-content-end py-6 tab_footer">
                           <button type="reset" class="btn btn-light btn-active-light-primary me-2">취소</button>
-                          <button id="submit" type="submit" class="btn btn-primary">변경사항 저장</button>
+                          <button id="submit" type="submit" class="btn btn-primary submit">변경사항 저장</button>
                         </div>
 
 
@@ -1301,7 +1308,8 @@
       $(document).on('click','#branch_list > tr',function(){
         newDiv = document.getElementById('submit');
         newDiv.innerHTML = `변경사항 저장`;
-        
+        $("#submit").addClass("submit");
+        $("#submit").removeClass("add_submit");
 
         let td_val = $(this).parents().find().prevObject[0].className;
         let td_val_2 = $(this).parents().find().prevObject[0].id;
@@ -1332,7 +1340,7 @@
       })
 
       // '변경사항 저장' 버튼 클릭 시,
-      $(document).on('click', '#submit', function(){
+      $(document).on('click', '.submit', function(){
         console.log("변경사항 저장");
         submit_data();
         location.reload();
@@ -1360,6 +1368,7 @@
         $("#select2-manager-container").text("매니저를 선택하세요");
         $('#branch').val("");
         $('#address').val("");
+        $('#detailAddress').val("");   
         $('#business_num').val("");
         $('#manager').val("");  
         $('#phone').val("");
@@ -2277,8 +2286,9 @@
             console.log("url",url_var)
             console.log("type_var",type_var)
             console.log(obj);
-            
-            location.reload();
+            close_popup();
+            make_board();
+            //location.reload();
             // Datatable 의 reinitialize 를 없애기 위해 destroy
             // $('#kt_ecommerce_edit_order_product_table').DataTable().destroy();
             // make_table(obj);

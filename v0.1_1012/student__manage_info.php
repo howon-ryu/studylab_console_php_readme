@@ -221,7 +221,7 @@
                             <!--begin::Header-->
                             <div class="card-header border-0 pt-5 card_l_h">
                               <!--begin::Tab nav-->
-                              <ul class="nav mb-2 mb-sm-0 card__left_tab">
+                              <ul class="nav mb-2 mb-sm-0 card__left_tab filter_ul">
                               <li class = "arrayFilter">
                                 <div class="card-toolbar">
                                 <!--begin::Menu-->
@@ -2640,7 +2640,6 @@
         $("#select2-group-container").text("학습실을 선택해주세요");
         $("#select2-grade-container").text("학년을 선택해주세요");
 
-
         $('#phone').val("");
         $('#passwordC').val("");
         $('#email').val("");
@@ -2650,7 +2649,8 @@
              
         $('#room').val("");     
         $('#group').val("");        
-        $('#address').val("");        
+        $('#address').val("");  
+        $('#detailAddress').val("");        
         $('#seatNumber').val("");        
         $('#realName').val("");        
         $('#userName').val("");        

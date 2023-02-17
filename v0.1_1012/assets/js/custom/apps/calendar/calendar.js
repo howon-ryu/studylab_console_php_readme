@@ -75,6 +75,7 @@ var KTAppCalendar = function() {
                 handleNewEvent();
             }, // Click event --- more info: https://fullcalendar.io/docs/eventClick          
             eventClick: function(arg) {
+                console.log("pop",popoverState)
                 hidePopovers();
                 formatArgs({
                     id: arg.event.id,
@@ -85,19 +86,24 @@ var KTAppCalendar = function() {
                     endStr: arg.event.endStr,
                     allDay: arg.event.allDay
                 });
+                //popover.dispose();
+                // popover.hide();
+                console.log("pop",popover)
                 handleViewEvent();
             }, // MouseEnter event --- more info: https://fullcalendar.io/docs/eventMouseEnter         
             eventMouseEnter: function(arg) {
-                formatArgs({
-                    id: arg.event.id,
-                    title: arg.event.title,
-                    description: arg.event.extendedProps.description,
-                    location: arg.event.extendedProps.location,
-                    startStr: arg.event.startStr,
-                    endStr: arg.event.endStr,
-                    allDay: arg.event.allDay
-                }); // Show popover preview           
-                initPopovers(arg.el);
+                
+                // formatArgs({
+                //     id: arg.event.id,
+                //     title: arg.event.title,
+                //     description: arg.event.extendedProps.description,
+                //     location: arg.event.extendedProps.location,
+                //     startStr: arg.event.startStr,
+                //     endStr: arg.event.endStr,
+                //     allDay: arg.event.allDay
+                // }); // Show popover preview     
+
+                //initPopovers(arg.el);
             },
             allDaySlot: false,
             editable: false,
@@ -189,7 +195,7 @@ var KTAppCalendar = function() {
                 'calendar_event_name': {
                     validators: {
                         notEmpty: {
-                            message: '학습 항목이 필요합니다.'
+                            message: '학습 항목d이 필요합니다.'
                         }
                     }
                 },
@@ -231,13 +237,93 @@ var KTAppCalendar = function() {
         startTimeFlatpickr = flatpickr(startTimepicker, {
             enableTime: true,
             noCalendar: true,
+            time_24hr: true,
             dateFormat: "H:i",     
         });
         endTimeFlatpickr = flatpickr(endTimepicker, {
             enableTime: true,
             noCalendar: true,
+            time_24hr: true,
             dateFormat: "H:i",       
         });
+    }
+
+    function editEvent(e)
+    {
+
+        // Prevent default button action        
+        e.preventDefault();
+        // Validate form before submit            
+        if (validator) {
+            validator.validate().then(function(status) {
+                console.log('validated!');
+                if (status == 'Valid') {
+                    // Show loading indication         
+                    submitButton.setAttribute('data-kt-indicator', 'on');
+                    // Disable submit button whilst loading         
+                    submitButton.disabled = true;
+                    // Simulate form submission              
+                    setTimeout(function() {
+                        // Simulate form submission          
+                        var editEventData = {
+                            id: data.id,
+                            title: eventName.value,
+                            description: eventDescription.value,
+                            location: eventLocation.value,
+                            start: startDatepicker.value+"T"+startTimepicker.value,
+                            
+                            //end: endDatepicker.value+"T"+endTimepicker.value, 
+                            end: startDatepicker.value+"T"+endTimepicker.value, // 현재 종료일은 hidden 으로 처리되어있어,시작 날짜를 바꾸면 종료일이 깨짐 따라서 날짜는 무조건 시작 날짜로 고정!
+                            allDay: data.allDay,
+                        };
+                        if(startTimepicker.value>=endTimepicker.value){
+                           
+                            Swal.fire({
+                                text:  "종료시간보다 시작시간이 빠를 수 없습니다. 시간을 다시 설정하세요",           
+                                icon:  "error",                  
+                                buttonsStyling: false,
+                                confirmButtonText:  "확인",           
+                                customClass: {
+                                    confirmButton:  "btn btn-primary"                  
+                                }
+                            });
+                            submitButton.disabled = false;
+                            submitButton.setAttribute('data-kt-indicator', false);
+                        }else{
+                            modifyplan(editEventData);
+                              // Show popup confirmation                  
+                            Swal.fire({
+                                text:  "항목이 수정되었습니다!",       
+                                icon:  "success",                
+                                buttonsStyling: false,
+                                confirmButtonText:  "확인",      
+                                customClass: {
+                                    confirmButton:  "btn btn-primary"            
+                                }
+                            }).then(function(result) {
+                                if (result.isConfirmed) {                                
+                                    modal.hide();
+                                }
+                            }); //form.submit(); 
+                        }
+                        
+                      
+                        // Submit form                       
+                    }, 2000);
+                } else {
+                    // Show popup warning                       
+                    Swal.fire({
+                        text:  "Sorry, looks like there are some errors detected, please try again.",
+                        icon:  "error",          
+                        buttonsStyling: false,
+                        confirmButtonText:  "Ok, got it!",     
+                        customClass: {
+                            confirmButton:  "btn btn-primary"                 
+                        }
+                    });
+                }
+            });
+        }
     }
     
     function addnewevent(e)
@@ -352,66 +438,19 @@ var KTAppCalendar = function() {
         console.log("data", data);
         populateForm(data);
         // Handle submit form     
-        submitButton.addEventListener('click', function(e) {
-            // Prevent default button action        
-            e.preventDefault();
-            // Validate form before submit            
-            if (validator) {
-                validator.validate().then(function(status) {
-                    console.log('validated!');
-                    if (status == 'Valid') {
-                        // Show loading indication         
-                        submitButton.setAttribute('data-kt-indicator', 'on');
-                        // Disable submit button whilst loading         
-                        submitButton.disabled = true;
-                        // Simulate form submission              
-                        setTimeout(function() {
-                            // Simulate form submission          
-                            var editEventData = {
-                                id: data.id,
-                                title: eventName.value,
-                                description: eventDescription.value,
-                                location: eventLocation.value,
-                                start: startDatepicker.value+"T"+startTimepicker.value,
-                                end: endDatepicker.value+"T"+endTimepicker.value,
-                                allDay: data.allDay,
-                            };
-                            modifyplan(editEventData);
-                            // Show popup confirmation                  
-                            Swal.fire({
-                                text:  "항목이 수정되었습니다!",       
-                                icon:  "success",                
-                                buttonsStyling: false,
-                                confirmButtonText:  "확인",      
-                                customClass: {
-                                    confirmButton:  "btn btn-primary"            
-                                }
-                            }).then(function(result) {
-                                if (result.isConfirmed) {                                
-                                    modal.hide();
-                                }
-                            }); //form.submit(); 
-                            // Submit form                       
-                        }, 2000);
-                    } else {
-                        // Show popup warning                       
-                        Swal.fire({
-                            text:  "Sorry, looks like there are some errors detected, please try again.",
-                            icon:  "error",          
-                            buttonsStyling: false,
-                            confirmButtonText:  "Ok, got it!",     
-                            customClass: {
-                                confirmButton:  "btn btn-primary"                 
-                            }
-                        });
-                    }
-                });
-            }
-        });
+        submitButton.removeEventListener('click', editEvent);
+        submitButton.removeEventListener('click', addnewevent);
+        submitButton.addEventListener('click', editEvent);
     }
     // Handle view event   
     const handleViewEvent = () => {
+        hidePopovers()
+        // popover.dispose();
+        // popover.hide();
+        $(".fc-popover-close").click();
         viewModal.show();
+        
+        
         // Detect all day event      
         var eventNameMod;
         var startDateMod;
@@ -564,6 +603,7 @@ var KTAppCalendar = function() {
         }
     } // Format FullCalendar reponses   
     const formatArgs = (res) => {
+        console.log("res",res)
         data.id = res.id;
         data.eventName = res.title;
         data.eventDescription = res.description;

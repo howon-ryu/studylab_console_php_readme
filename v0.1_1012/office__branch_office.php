@@ -140,7 +140,7 @@
                             <!--begin::Header-->
                             <div class="card-header border-0 pt-5 card_l_h">
                               <!--begin::Tab nav-->
-                              <ul class="nav mb-2 mb-sm-0 card__left_tab">
+                              <ul class="nav mb-2 mb-sm-0 card__left_tab filter_ul">
                               <li class = "arrayFilter">
                                 <div class="card-toolbar">
                                 <!--begin::Menu-->
@@ -239,16 +239,7 @@
                                           data-allow-clear="true"
                                           
                                         >
-                                          <!-- <option></option>
-                                          <option value="1">
-                                            동백점
-                                          </option>
-                                          <option value="2">
-                                            코스모스점
-                                          </option>
-                                          <option value="3">
-                                            벚꽃점
-                                          </option> -->
+                                          
                                         </select>
                                       </div>
                                       <!--end::Input-->
@@ -927,8 +918,11 @@
         $("#submit").addClass("submit");
         $("#submit").removeClass("add_submit");
         let td_val = $(this).parents().find().prevObject[0].className;
+        console.log("확인",$(this).parents().find());
+        console.log("확인2",$(this).parents().find().prevObject[0]);
         let td_val_2 = $(this).parents().find().prevObject[0].id;
         done_button = $(this).find().prevObject[0];
+        console.log("done_button",done_button);
         done_button.classList.add('on')
         num = done_button.id
         console.log("cli!!!!!")

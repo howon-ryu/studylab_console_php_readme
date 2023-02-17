@@ -1718,20 +1718,15 @@
                 return;
               }
       });
-      
-
     }
     function deleteplan(e){
       console.log(e);
-      
       $.ajax({
               url: "https://farm01.bitlworks.co.kr/api/v1/items/study-plans/"+e,
               type: "delete",
               contentType:"application/json",
               data:JSON.stringify({
-              
                 "itemId": e
-                
               })
               ,
               datatype: "JSON",

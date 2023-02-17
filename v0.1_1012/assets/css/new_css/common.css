@@ -11,8 +11,16 @@
 .card__left_tab .nav-item {
 
   float: right;
-  margin-left: 390px !important;
+  /* margin-left: 390px !important; */
 }
+
+.filter_ul {
+  width: 100% !important;
+  display: flex !important;
+  justify-content: space-between !important;
+}
+
+.arrayFilter {}
 
 .button {
   background-color: #F9B514;
@@ -94,13 +102,29 @@
   color: #009ef7 !important;
 }
 
+.card .card-header {
+  display: flex !important;
+  justify-content: space-between;
+}
 
+.flex1 {
+  /* border: solid; */
+  /* flex: 1 1 40%; */
+}
+
+
+.flex2 {
+  /* border: solid; */
+  /* flex: 1 1 40%; */
+  width: 370px;
+  float: right
+}
 
 .openBtn_add {
 
-  float: right !important;
-  margin-left: 630px;
-
+  width: 60px;
+  float: right;
+  margin-right: 15px;
   /* position: absolute; */
 }
 
@@ -115,7 +139,7 @@
 
 .input_50 .input_75 {
   display: inline-block;
-  width: 75% !important;
+  width: 70% !important;
 }
 
 .addressbtn {
@@ -132,20 +156,20 @@
 
   margin-left: 5px;
   margin-top: 14px;
-  width : 150px;
+  width: 150px;
 }
 
 .boardRoom {
 
   margin-left: 15px;
-  width : 140px;
+  width: 140px;
   margin-top: 14px;
 }
 
 .boardGroup .select2-selection__clear {
 
   top: 40% !important;
-  
+
 
 }
 
@@ -155,26 +179,19 @@
 
 }
 
-
 .logo_css {
   padding-left: 30px;
   padding-top: 30px;
   padding-bottom: 10px;
 }
 
-
 .hidden {
   display: none !important;
 }
 
 .infilter_nonestatus .select2-selection__clear {
-
   top: 40% !important;
-
 }
-
-
-
 
 /* 왜 도대체 "학습항목이 필요합니다." 는 원래 2개가 들어가있을까? */
 .enen div:nth-child(4) {
@@ -186,7 +203,7 @@
   .card__left_tab .nav-item {
 
     float: right;
-    margin-left: 330px !important;
+    /* margin-left: 330px !important; */
   }
 
   .openBtn_add {

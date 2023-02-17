@@ -140,7 +140,7 @@
                             <!--begin::Header-->
                             <div class="card-header border-0 pt-5 card_l_h">
                               <!--begin::Tab nav-->
-                              <ul class="nav mb-2 mb-sm-0 card__left_tab">
+                              <ul class="nav mb-2 mb-sm-0 card__left_tab filter_ul">
                               <li class = "arrayFilter">
                                 <div class="card-toolbar">
                                 <!--begin::Menu-->

@@ -139,7 +139,7 @@
                             <!--begin::Header-->
                             <div class="card-header border-0 pt-5 card_l_h">
                               <!--begin::Tab nav-->
-                              <ul class="nav mb-2 mb-sm-0 card__left_tab">
+                              <ul class="nav mb-2 mb-sm-0 card__left_tab filter_ul">
                               <li class = "arrayFilter">
                                 <div class="card-toolbar">
                                 <!--begin::Menu-->
@@ -999,8 +999,8 @@
     <script src="assets/js/custom/utilities/modals/new-target.js"></script>
     <script>
 
-    let brandList;
-    let brandId = 0;
+    let brandList; // list 에 표시될 브랜드 list
+    let brandId = 0; 
     let specBrandInfo;
     let mode = "modifyMode";
     let getBrandIdNone = 1;
@@ -1008,12 +1008,20 @@
     
       $(document).ready(function(){
         let data_init = {
-          status:"사용"
+          status:"사용" //  처음 표시될 리스트의 기본 상태:  "사용"
         }
         //getCookie('brandId')
-        console.log("쿠키",getCookie('brandId'));
-        getBrandId = getCookie('brandId');
-        console.log("쿠키",getBrandId);
+
+
+
+        
+        
+        getBrandId = getCookie('brandId'); //이전에 선택된 brand의 자동 선택을 위해, 쿠키에서 브랜드 저장
+        
+
+
+
+        // brandlist 가져오기
         $.ajax({
           url: "https://farm01.bitlworks.co.kr/api/v1/brands",
           type: "get",
@@ -1022,9 +1030,9 @@
           datatype: "JSON",
           success: function(obj){
             brandList = obj
-            console.log("brandList",brandList);
-            getBrandIdNone = brandList[0].id
-            make_table(obj);
+            console.log("initbrandList",brandList);
+            getBrandIdNone = brandList[0].id // '+' 등으로 인해 선택이 없어질 경우 가장 첫번째 브랜드를 자동선택하기 위해서 변수에 넣어둠
+            make_table(obj); //  테이블 만들기
 
           },
           error: function(xhr, status, error){
@@ -1033,6 +1041,9 @@
             return
           }
         })
+
+
+        //  사이드바 페이지별 show here active 설정
         nav = document.getElementById('menu-academy');
         nav.classList.add('show');
         nav.classList.add('here');
@@ -1041,15 +1052,18 @@
         console.log(nav)
       })
       
+
+      // brandlist 테이블을 만드는 함수
       function make_table(data){
         newDiv = document.getElementById('brandsList');
-        console.log("nD",newDiv);
+        
         
         newDiv.innerHTML = ``;
 
         for (row in data){
           
           row_data = data[row];
+          // 상태에 따라 달라지는 클래스 구분
           if (row_data.status == "사용"){
             status_color = "success";
           } else if (row_data.status == "대기"){
@@ -1087,124 +1101,33 @@
 
 
         
-        console.log("getBrandId",getBrandId)
+        //console.log("getBrandId",getBrandId)
+        // 선택했던 브랜드가 쿠키에 있다면 해당 브랜드를 강제 선택
         if(getBrandId != undefined){
           document.getElementById(getBrandId).click();
-          console.log("ㅁㅁㅁㅁㅁ",document.getElementById(getBrandId))
+          
         }else{
-          console.log("undef!!!!!!")
+          
           document.getElementById(getBrandIdNone).click();
           
         }
-        call();
+        call(); // save-order.js 에 정의된 테이블 만드는 함수 호출
         
       }
 
 
 
-      // $(document).ready(function(){
-      //   // $('#kt_ecommerce_edit_order_product_table').DataTable({
-      //   //   ajax:{url:"https://farm01.bitlworks.co.kr/api/v1/brands",dataSrc:''},
-      //   //   columns:[
-      //   //     {data:"id"},
-      //   //     {data:"name"},
-      //   //     {data:"status"},
-      //   //   ]
-      //   // })
-        
-      //   $.ajax({
-      //     url: "https://farm01.bitlworks.co.kr/api/v1/brands",
-      //     type: "get",
-      //     contentType:"application/json",
-      //     // data:studentData,
-      //     datatype: "JSON",
-      //     success: function(obj){
-      //       console.log(obj);
-      //       // arrr.push(obj)
-      //       MakeArrayList(obj)
-      //       console.log("flag");
-      //       // for(var i =0; i<obj.length; i++){
-      //       //   console.log(i);
-              
-      //       //   $('#listlist').append('<li>'+'<button id = "listclick" value = "2">'+obj[i].id+'</button>'+'</li>');
-      //       // }
-            
-      //     },
-      //     error: function(xhr, status, error){
-      //       console.log(`error: ${error}`)
-      //       console.log(`status: ${status}`)
-            
-      //       return
-      //     }
-      //   })
+      
 
-
-      // })
-
-
-      // function MakeArrayList(obj){
-      //   console.log("arrlist:",obj);
-      //   $("#listarray").empty();
-      //   $.each(obj, function(i,item){
-        
-        
-      //   let id=item['id']
-      //   console.log(item);
-      //   console.log("asd",i);
-      //   let li1 = $("<tr ></tr>");
-      //   $(`<td>${i+1}</td>`).appendTo(li1);
-      //   $(`<td class = 'n_empty'></td>`).appendTo(li1);
-      //   // let td1 = $("<td class = 'text-muted fw-semibold'></td>").html().appendTo(li1);
-      //   let td1 = $("<td class = 'text-muted fw-semibold'></td>");
-      //   let div1 = $("<div class = 'd-flex flex-stack'></div>"); // td1 으로 들어가야함
-      //   let div2 = $("<div class = 'd-flex align-items-center flex-row-fluid flex-wrap'></div>"); // div1 으로 들어가야함
-      //   let div3 = $("<div class = 'flex-grow-1 me-2'></div>"); // div2 으로 들어가야함
-      //   let td2 = $("<td class = 'text-end'></td>"); // li1 으로 들어가야함
-        
-      //   console.log(`id: ${id}`)
-      //   $.each(item, function(key,value){
-          
-          
-      //     console.log("k",key);
-      //     console.log("v",value);
-      //     if(key == "name" ){
-      //       $(`<a href='/metronic8/demo1/../demo1/pages/user-profile/overview.html' class = 'text-gray-800 text-hover-primary fs-6 fw-bold' >${value}</a>`).appendTo(div3);
-            
-      //     }
-      //     if(key == "head" ){
-      //       $(`<span class = 'text-muted fw-semibold d-block fs-7' >${value.realName}</span>`).appendTo(div3);
-      //     }
-      //     if(key == "status" ){
-      //       $(`<span class = 'badge badge-light-success fw-bold px-r py-3' >${value}</span>`).appendTo(td2);
-      //     }
-          
-      //   });
-      //   div3.appendTo(div2);
-      //   div2.appendTo(div1);
-      //   div1.appendTo(td1);
-      //   td1.appendTo(li1);
-        
-      //   $("<td class = 'n_empty'></td>").appendTo(li1);
-      //   td2.appendTo(li1);
-      //   $("#listarray").append(li1);
-        
-      // });
-
-      // call();
-      // }
-
-
-
+      // 브랜드 리스트 안에 있는 브랜드들을 선택하였을때,
       $(document).on('click','#brandsList > tr',function(){
         
         let num;
-        // let td_val = $(this).parents().find().prevObject[0].className;
-        // let td_val_2 = $(this).parents().find().prevObject[0].id;
-        let tr_button = $(this).find().prevObject[0];
-        // console.log("tr_val",tr_button);
-        // console.log("tr_id",tr_button.className);
-        tr_button.classList.add('on');
-        if(mode == "addMode"){
+        
+        let tr_button = $(this).find().prevObject[0]; // 클릭한 tr
+        
+        tr_button.classList.add('on'); // 클릭상태(파란색)
+        if(mode == "addMode"){ // 이전 상태가 추가 모드 였으면 다시 변경 모드로 바꾸어 주기
           tt = document.getElementsByClassName("addBtn")[0]
           //tt.classList.add("");
           mode = "modifyMode";
@@ -1213,12 +1136,12 @@
           document.getElementById("doubleCheck").style.display = "none";
           
           //console.log(tt);
-          console.log(mode);
+          // console.log(mode);
         }
-        num = tr_button.id
-        setCookie('brandId',num,1)
-        listunclick(num);
-        brandId = num;
+        num = tr_button.id 
+        setCookie('brandId',num,1) // 클릭한 브랜드 쿠키 저장
+        listunclick(num); // 클릭한 브랜드를 제외한 다른 브랜드 클랙 해제
+        brandId = num; 
         console.log("select brand id:",brandId);
         
         $.ajax({
@@ -1232,7 +1155,7 @@
             
             console.log(obj)
             specBrandInfo = obj;
-            make_board(specBrandInfo);
+            make_board(specBrandInfo); //  보드 만들기
 
           },
           error: function(xhr, status, error){
@@ -1243,9 +1166,10 @@
         })
 
       })
+      // 도메인 중복확인
       function duplicateCheck(){
         tt = document.getElementById("domain").value;
-        console.log(tt)
+        // console.log(tt)
         $.ajax({
           url: "https://farm01.bitlworks.co.kr/api/v1/auth/check/"+tt,
           type: "get",
@@ -1270,11 +1194,12 @@
         })
       }
       
-
+      // 보드 생성
+      // 각 input 에 맞는 data 넣어주기
       function make_board(data){
         // console.log(data.brand.id);
         console.log("make_board_data",data)
-        let address = data.address.split('//')
+        let address = data.address.split('//') // 주소와 상세주소의 분리
         
         // $('#brand').val(data.brand.id).prop("selected",true);
         $('#address').val(address[0])
@@ -1304,13 +1229,15 @@
         
       }
 
+
+      // 클릭한 브랜드 제외 다른 브랜드 클릭 해제
       function listunclick(value){
         //console.log("unclick_v", value);
         // console.log("unclick", brandList);
-        brandList.forEach((currentElement, index, array) => {
+        brandList.forEach((currentElement, index, array) => { // 브랜드 리스트 순회
           //console.log("currentElement", currentElement);
           //console.log("value", value);
-          if (currentElement.id != value) {
+          if (currentElement.id != value) { 
             const untempbtn = document.getElementsByClassName(
               `brand_` + (index+1)
             );
@@ -1330,8 +1257,11 @@
           // }
         });
       }
+      // 브랜드 추가
       function addClick(){
-        listunclick(-1);
+        listunclick(-1); // 모든 클릭 제거
+
+        // 전부 공백으로 바꾸어주기
         $('#headRealName').val("");
         $('#headUserName').val("");
         
@@ -1356,6 +1286,7 @@
         $("input:radio[name ='choice_use']")[2].checked = false
         
         
+        // 변경 모드의 경우 추가 모드로 바꾸어주기
         if(mode == "modifyMode"){
 
           tt = document.getElementsByClassName("addBtn")[0]
@@ -1381,17 +1312,20 @@
         // }
       }
 
+      // 필터에서 리셋이 클릭될경우 
       function resetClick(){
-        console.log("reset 클릭");
+        
 
-        document.getElementsByName("brandStatusSelect")[0].value = ""        
+        document.getElementsByName("brandStatusSelect")[0].value = ""        // value 를 "" 로 바꿈으로써 전체 선택
 
+
+        // 존재하는 모든 form을 돌면서, 'x' 표시가 있는 경우 hidden 처리
         for (i = 0; i<document.getElementsByClassName("select2-selection__clear").length;i++){
          document.getElementsByClassName("select2-selection__clear")[i].classList.add("hidden")
         }
         
-        console.log(document.getElementsByName("brandStatusSelect"))
         
+        // form 안의 글자를 바꾸어줌
         $(".select2-selection__rendered").text("상태 선택");
         
 
@@ -1399,15 +1333,16 @@
       }
 
 
-
+      // 필터 설정
       function filterClick(){
-        console.log("필터 클릭");
+        // console.log("필터 클릭");
         
-        console.log("status:",document.getElementsByName("brandStatusSelect"));
+        // console.log("status:",document.getElementsByName("brandStatusSelect"));
+
         let cu = ""
 
         
-          
+        // status 에 따라서 넣을 status 변수 정의
         if(document.getElementsByName("brandStatusSelect")[0].value=="1"){
           cu = "사용"
         }else if(document.getElementsByName("brandStatusSelect")[0].value=="2"){
@@ -1430,7 +1365,8 @@
           datatype: "JSON",
           success: function(obj){
             
-            brandList = obj;
+            
+            brandList = obj; // 리스트를 바꾸어 주어야 브랜드 클릭 이슈가 안생김
             console.log(obj);
             // Datatable 의 reinitialize 를 없애기 위해 destroy
             $('#kt_ecommerce_edit_order_product_table').DataTable().destroy();
@@ -1449,17 +1385,17 @@
       }
 
 
-
+      // 브랜드 변경사항 저장
       function brandput(){
 
 
-        let logo_img_file = document.getElementById('logo_img');
-        let favicon_img_file = document.getElementById('favicon_img');
+        let logo_img_file = document.getElementById('logo_img'); // 로고 이미지
+        let favicon_img_file = document.getElementById('favicon_img'); // 파비콘 이미지
           
         
           const selectedLogoFile = logo_img_file.files[0];
           const selectedFaviFile = favicon_img_file.files[0];
-          var formData = new FormData()
+          var formData = new FormData() // 이미지 파일임으로 formdata에 넣어서 한번에 보내야함
           formData.append("logo_img",selectedLogoFile)
           formData.append("favicon_img",selectedFaviFile)
           formData.append("brand_id",brandId)
@@ -1471,11 +1407,8 @@
 
         // var formData = $('#form1').serialize()
         let cu = "사용"
-        // var domain = document.getElementsByName("domain")[0].value;
-        // console.log("fd",domain)
-        console.log("~~~~~~~~~~~~~~~~~~~",document.getElementsByName("choice_use")[0].checked);
-        console.log("~~~~~~~~~~~~~~~~~~~",document.getElementsByName("choice_use")[1].checked);
-        console.log("~~~~~~~~~~~~~~~~~~~",document.getElementsByName("choice_use")[2].checked);
+        
+        // status 정의
         if(document.getElementsByName("choice_use")[2].checked==true){
           cu = "삭제"
         }
@@ -1485,7 +1418,7 @@
         else{
           cu = "사용"
         }
-
+        // 주소, 상세 주소  구분
         let allAddress = document.getElementsByName("address")[0].value +" //"+ document.getElementsByName("detailAddress")[0].value
         // const studentData ={
         //     "studentId":<?=$_SESSION['id']?>,
@@ -1526,7 +1459,7 @@
           success: function(obj){
             
             
-            console.log("obj",obj)
+            console.log("put brand",obj)
 
 
             // 파일 저장 ajax 
@@ -1560,16 +1493,16 @@
         
       }
         
-
+      // 브랜드 추가
       function brandpost(){
         
-        let logo_img_file = document.getElementById('logo_img');
-        let favicon_img_file = document.getElementById('favicon_img');
+        let logo_img_file = document.getElementById('logo_img'); // 로고 이미지
+        let favicon_img_file = document.getElementById('favicon_img'); // 파비콘 이미지
           
         
           const selectedLogoFile = logo_img_file.files[0];
           const selectedFaviFile = favicon_img_file.files[0];
-          var formData = new FormData()
+          var formData = new FormData() // 이미지 파일임으로 formdata에 넣어서 한번에 보내야함
           formData.append("logo_img",selectedLogoFile)
           formData.append("favicon_img",selectedFaviFile)
           formData.append("brand_id",brandId)
@@ -1585,18 +1518,14 @@
 
 
 
-
+// 주소, 상세 주소  구분
 
           let allAddress = document.getElementsByName("address")[0].value +" //"+ document.getElementsByName("detailAddress")[0].value
 
-
-        // var formData = $('#form1').serialize()
+        // status 정의
+        
         let cu = "사용"
-        // var domain = document.getElementsByName("domain")[0].value;
-        // console.log("fd",domain)
-        console.log("~~~~~~~~~~~~~~~~~~~",document.getElementsByName("choice_use")[0].checked);
-        console.log("~~~~~~~~~~~~~~~~~~~",document.getElementsByName("choice_use")[1].checked);
-        console.log("~~~~~~~~~~~~~~~~~~~",document.getElementsByName("choice_use")[2].checked);
+        
         if(document.getElementsByName("choice_use")[2].checked==true){
           cu = "삭제"
         }
@@ -1633,7 +1562,7 @@
         },
       };
       console.log("dt",data_t)
-      if(doubleCheckFlag == true){
+      if(doubleCheckFlag == true){ // 중복확인이 통과이면
         $.ajax({
           url: "https://farm01.bitlworks.co.kr/api/v1/brands",
           type: "post",
@@ -1643,7 +1572,7 @@
           success: function(obj){
             
             
-            console.log(obj)
+            console.log("post brand",obj)
 
             $.ajax({
                 	url: "office__head_office_action.php",
@@ -1682,6 +1611,7 @@
     
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script>
+      // 카카오 주소 찾기 api
       function findAddress(){
         new daum.Postcode({
             oncomplete: function(data) {

@@ -11169,6 +11169,7 @@ var FullCalendar = (function(exports) {
     }(BaseComponent));
 
     function renderInnerContent$4(innerProps) {
+        
         return (createElement("div", {
                 className: "fc-event-main-frame"
             },
@@ -11317,6 +11318,7 @@ var FullCalendar = (function(exports) {
     };
 
     function renderInnerContent$3(props) {
+        
         var title = props.event.title;
         return title && (createElement("div", {
             className: "fc-event-title"
@@ -14368,6 +14370,7 @@ var FullCalendar = (function(exports) {
     }(BaseComponent));
 
     function renderInnerContent$2(innerProps) {
+        
         return (createElement(Fragment, null,
             createElement("div", {
                 className: "fc-daygrid-event-dot",

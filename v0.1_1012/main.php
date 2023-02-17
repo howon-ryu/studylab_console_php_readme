@@ -4,7 +4,6 @@
   <head>
     <base href="" />
     <?php
-      require_once('media_header.php');
       require_once('head.php');
     ?>
     <meta charset="utf-8" />
