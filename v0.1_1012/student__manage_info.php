@@ -1444,15 +1444,10 @@
 
 
       $(document).ready(function(){
-        // 원장이 갖고 있는 branchid 먼저 얻기
-
-
-
-
-
+        
 
         console.log("쿠키",getCookie('studentId'));
-        getStudentId = getCookie('studentId')
+        getStudentId = getCookie('studentId') //이전에 선택된 student의 자동 선택을 위해, 쿠키에서 브랜드 저장
 
         const data_t ={
             "brandId": brandId,
@@ -1463,7 +1458,11 @@
         }
         
         
-        if(<?=$_SESSION['roleid']?> == 3){
+        // 학생의 경우 owner나 manager는 여러 지점을 가질수도 있고, 그렇게 되면 각기 다른 지점에 소속된 학생이 한 원장이나 매니저 아래에서 나와야 함
+        // 그렇게 하기위하여 먼저 brandid, ownerid, managerid를 이용하여 소속 지점id를 가져오고, 가져온 지점(id)에 소속 된 학생을 합쳐서 학생 리스트를 출력
+
+
+        if(<?=$_SESSION['roleid']?> == 3){ // 오너일때 소속 지점 리스트 가져오기
           
           console.log("roleid",<?=$_SESSION['roleid']?>);
 
@@ -1482,7 +1481,7 @@
             success: function(obj){
               console.log(obj)
               //res = obj
-              obj.forEach((data)=>(tempBranchList.push(data.id)))
+              obj.forEach((data)=>(tempBranchList.push(data.id))) // 소속 지점 리스트
               console.log("tempBranchList",tempBranchList)
             },
             error: function(xhr, status, error){
@@ -1495,7 +1494,7 @@
 
           
           
-          tempBranchList.forEach((bi)=>{
+          tempBranchList.forEach((bi)=>{ // 각 지점 id 별로 소속된 학생들 리스트 뽑기
             console.log("bi!!",bi);
             let data_g ={
               "brandId": brandId,
@@ -1518,7 +1517,7 @@
               getStudentIdNone = studentList[0].id
 
 
-
+              // brand 와 branch리스트를 make_table()을 한 후에 하면, select 의 첫째항으로 잡힘으로 make_table()하기 전에 setting 하기
 
               setting()
 
@@ -1548,7 +1547,8 @@
 
           
 
-          console.log("???",brandId,ownerId);
+          //console.log("???",brandId,ownerId);
+          // 학생 리스트 만들기
           $.ajax({
           url: "https://farm01.bitlworks.co.kr/api/v1/brands/"+brandId,
           type: "get",
@@ -1570,7 +1570,7 @@
         
 
 
-      }else if(<?=$_SESSION['roleid']?> == 4){
+      }else if(<?=$_SESSION['roleid']?> == 4){ // 매니저일때 소속 지점 리스트 가져오기
         console.log("roleid",<?=$_SESSION['roleid']?>);
         const data_branch ={
               "brandId": brandId,
@@ -1601,7 +1601,7 @@
 
           
           
-          tempBranchList.forEach((bi)=>{
+          tempBranchList.forEach((bi)=>{ // 각 지점 id 별로 소속된 학생들 리스트 뽑기
             console.log("bi!!",bi);
             let data_g ={
               "brandId": brandId,
@@ -1623,7 +1623,7 @@
               
 
               getStudentIdNone = studentList[0].id
-
+// brand 와 branch리스트를 make_table()을 한 후에 하면, select 의 첫째항으로 잡힘으로 make_table()하기 전에 setting 하기
               setting()
 
 
@@ -1646,9 +1646,9 @@
           
         
 
-          
+          // 학생 리스트 만들기
 
-          console.log("???",brandId,ownerId);
+          //console.log("???",brandId,ownerId);
           $.ajax({
           url: "https://farm01.bitlworks.co.kr/api/v1/brands/"+brandId,
           type: "get",
@@ -1684,7 +1684,7 @@
             getStudentIdNone = studentList[0].id
 
 
-
+// brand 와 branch리스트를 make_table()을 한 후에 하면, select 의 첫째항으로 잡힘으로 make_table()하기 전에 setting 하기
 
             setting()
 
@@ -1708,22 +1708,10 @@
       }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
       
 
 
-
+//  사이드바 페이지별 show here active 설정
 
 
         nav = document.getElementById('menu-student');
@@ -1733,24 +1721,18 @@
         nav_suv.classList.add('active');
         
 
-
-      
-
-
-
-
         
       }
       
       
       
       )
-
+// brand 와 branch리스트를 make_table()을 한 후에 하면, select 의 첫째항으로 잡힘으로 make_table()하기 전에 setting 하기
 
       function setting(){
-        console.log("!!!!!!");
-        if(<?=$_SESSION['roleid']?> == 1){
-          console.log("2@@@2");
+        
+        if(<?=$_SESSION['roleid']?> == 1){ // root 의 경우만 brand가 정해져 있지 않음, 전부 그냥 검색해도 됨
+          
         $.ajax({
           url: "https://farm01.bitlworks.co.kr/api/v1/brands",
           type: "get",
@@ -1804,7 +1786,7 @@
             return
           }
         })
-        }else{
+        }else{ // root 가 아닌 경우는 brand가 정해져 있음으로 해당 브랜드를 고정한다
 
           console.log("setting_else",brandId,ownerId);
           $.ajax({
@@ -1827,7 +1809,7 @@
           
         }
       }
-
+    // 좌측 학생 리스트를 만들어주는 함수
       function make_table(data){
 
         newDiv = document.getElementById('studentsList');
@@ -1836,55 +1818,14 @@
         newDiv.innerHTML = ``;
         for (row in data){
           row_data = data[row];
-
-          // newDiv.innerHTML += `
-          //   <tr class="student_${parseInt(row) + 1}" id = ${row_data.id}>
-          //     <td> ${parseInt(row) + 1} </td>
-          //     <td class="n_empty"></td>
-          //     <td class="text-muted fw-semibold">
-          //       <div class="d-flex flex-stack">
-          //         <div class="d-flex align-items-center flex-row-fluid flex-wrap">
-          //           <div class="flex-grow-1 me-2">
-          //             <a
-          //               href="/metronic8/demo1/../demo1/pages/user-profile/overview.html"
-          //               class="text-gray-800 text-hover-primary fs-6 fw-bold"
-          //               >${row_data.branch.name}</a
-          //             >
-                      
-          //           </div>
-          //         </div>
-          //       </div>
-          //     </td>
-          //     <td>
-          //                               <!--begin::Section-->
-          //                               <div
-          //                               class="d-flex align-items-center flex-row-fluid flex-wrap"
-          //                             >
-          //                               <!--begin:Author-->
-          //                               <div class="flex-grow-1 me-2">
-          //                                 <a
-          //                                   href="/metronic8/demo1/../demo1/pages/user-profile/overview.html"
-          //                                   class="text-gray-800 text-hover-primary fs-6 fw-bold"
-          //                                   >${row_data.realName}</a
-          //                                 >
-          //                                 <span
-          //                                   class="text-muted fw-semibold d-block fs-7"
-          //                                   >${row_data.school} <span>${row_data.grade}</span></span
-          //                                 >
-          //                               </div>
-          //                               <!--end:Author-->
-          //                             </div>
-          //                             <!--end::Section-->
-          //                             </td>
-              
-          //     <td class="text-end" id ="statusUse" >
-          //       <span class="badge badge-light-success fw-bold px-4 py-3">${row_data.status}</span>
-          //     </td>
-              
-          //   </tr>`
-
-          if(row_data.status == "사용"){
-            newDiv.innerHTML += `
+          if (row_data.status == "사용"){
+            status_color = "success";
+          } else if (row_data.status == "대기"){
+            status_color = "warning";
+          } else{
+            status_color = "danger";
+          }
+          newDiv.innerHTML += `
             <tr class="student_${parseInt(row) + 1}" id = ${row_data.id}>
               <td> ${parseInt(row) + 1} </td>
               <td class="n_empty"></td>
@@ -1925,103 +1866,11 @@
                                       </td>
               
               <td class="text-end" id ="statusUse" >
-                <span class="badge badge-light-success fw-bold px-4 py-3">${row_data.status}</span>
+                <span class="badge badge-light-${status_color} fw-bold px-4 py-3">${row_data.status}</span>
               </td>
               
             </tr>`
-          }else if(row_data.status == "대기"){
-            newDiv.innerHTML += `
-            <tr class="student_${parseInt(row) + 1}" id = ${row_data.id}>
-              <td> ${parseInt(row) + 1} </td>
-              <td class="n_empty"></td>
-              <td class="text-muted fw-semibold">
-                <div class="d-flex flex-stack">
-                  <div class="d-flex align-items-center flex-row-fluid flex-wrap">
-                    <div class="flex-grow-1 me-2">
-                      <a
-                        
-                        class="text-gray-800 text-hover-primary fs-6 fw-bold"
-                        >${row_data.branch.name}</a
-                      >
-                      
-                    </div>
-                  </div>
-                </div>
-              </td>
-              <td>
-                                        <!--begin::Section-->
-                                        <div
-                                        class="d-flex align-items-center flex-row-fluid flex-wrap"
-                                      >
-                                        <!--begin:Author-->
-                                        <div class="flex-grow-1 me-2">
-                                          <a
-                                            
-                                            class="text-gray-800 text-hover-primary fs-6 fw-bold"
-                                            >${row_data.realName}</a
-                                          >
-                                          <span
-                                            class="text-muted fw-semibold d-block fs-7"
-                                            >${row_data.school} <span>${row_data.grade}</span></span
-                                          >
-                                        </div>
-                                        <!--end:Author-->
-                                      </div>
-                                      <!--end::Section-->
-                                      </td>
-              
-              <td class="text-end" id ="statusWait" >
-                <span class="badge badge-light-warning fw-bold px-4 py-3">${row_data.status}</span>
-              </td>
-              
-            </tr>`
-          }else{
-            newDiv.innerHTML += `
-            <tr class="student_${parseInt(row) + 1}" id = ${row_data.id}>
-              <td> ${parseInt(row) + 1} </td>
-              <td class="n_empty"></td>
-              <td class="text-muted fw-semibold">
-                <div class="d-flex flex-stack">
-                  <div class="d-flex align-items-center flex-row-fluid flex-wrap">
-                    <div class="flex-grow-1 me-2">
-                      <a
-                        
-                        class="text-gray-800 text-hover-primary fs-6 fw-bold"
-                        >${row_data.branch.name}</a
-                      >
-                      
-                    </div>
-                  </div>
-                </div>
-              </td>
-              <td>
-                                        <!--begin::Section-->
-                                        <div
-                                        class="d-flex align-items-center flex-row-fluid flex-wrap"
-                                      >
-                                        <!--begin:Author-->
-                                        <div class="flex-grow-1 me-2">
-                                          <a
-                                            
-                                            class="text-gray-800 text-hover-primary fs-6 fw-bold"
-                                            >${row_data.realName}</a
-                                          >
-                                          <span
-                                            class="text-muted fw-semibold d-block fs-7"
-                                            >${row_data.school} <span>${row_data.grade}</span></span
-                                          >
-                                        </div>
-                                        <!--end:Author-->
-                                      </div>
-                                      <!--end::Section-->
-                                      </td>
-              
-              <td class="text-end" id ="statusStop" >
-                <span class="badge badge-light-danger fw-bold px-4 py-3">${row_data.status}</span>
-              </td>
-              
-            </tr>`
-          }
+
           
 
 
@@ -2046,9 +1895,18 @@
           // }
         }
 
+        // 만약 '대기' 상태에서 클릭후  '사용' 상태로 온다면 실제쿠키에는 대기 에서 클릭한 student가 저장되어있겠지만, getStudentId 변수에는 .ready에서 정의한 변수만 있을것임으로 
+        // 다시 한번 getStudentId 를 최신화 시키고 현재 리스트에 해당 student 가 없을 경우 리스트의 첫번째 student를 선택하도록 함
+        getStudentId = getCookie('studentId')
         if(getStudentId != undefined){
-          document.getElementById(getStudentId).click();
-          console.log(document.getElementById(getStudentId))
+          
+          
+          if(document.getElementById(getStudentId)==null){
+            document.getElementById(getStudentIdNone).click();
+          }else{
+            document.getElementById(getStudentId).click();
+          }
+          
         }else{
           console.log("undef!!!!!!")
           document.getElementById(getStudentIdNone).click();

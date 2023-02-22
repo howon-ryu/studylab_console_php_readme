@@ -768,7 +768,7 @@
       let role_id = '<?=$_SESSION['roleid']?>';
       let brand_id = '<?=$_SESSION['brand_id']?>';
       let done_button = "";
-      let owner_list 
+      let owner_list  // list에 표시될 owner
       let getOwnerIdNone = 1;
 
       $(".office__branch_office").addClass("active");
@@ -776,11 +776,13 @@
       $(document).ready(function(){
         // 원장 리스트
         console.log("쿠키",getCookie('ownerId'));
-        getOwnerId = getCookie('ownerId')
+        getOwnerId = getCookie('ownerId')  //이전에 선택된 owner의 자동 선택을 위해, 쿠키에서 브랜드 저장
 
-        if(role_id == 2){
+
+        // ownerList 가져오기
+        if(role_id == 2){ // role id = 2 인 경우는 brand 가 정해져 있음
           let data_init={
-            status:"사용"  
+            status:"사용"  //  처음 표시될 리스트의 기본 상태:  "사용"
           }
           $.ajax({
           url: "https://farm01.bitlworks.co.kr/api/v1/users/owners?brandId="+brand_id,
@@ -791,11 +793,11 @@
           datatype: "JSON",
           success: function(obj){
             owner_list = obj;
-            getOwnerIdNone = owner_list[0].id
+            getOwnerIdNone = owner_list[0].id // '+' 등으로 인해 선택이 없어질 경우 가장 첫번째 오너를 자동선택하기 위해서 변수에 넣어둠
 
 
 
-          // 브랜드 리스트 
+          // 브랜드 리스트 만들기
           // 클릭 이수 make_brand_list 함수를 사용하면 본사명이 첫번째 항목으로 바뀌기에 make_brand_list 를 먼저하고 make_table을 하도록함
           if (role_id == 1) brand_url = "https://farm01.bitlworks.co.kr/api/v1/brands";
           else brand_url = "https://farm01.bitlworks.co.kr/api/v1/brands/" + brand_id;
@@ -820,7 +822,7 @@
 
 
 
-            make_table(obj);
+            make_table(obj);  //  테이블 만들기
           },
           error: function(xhr, status, error){
             console.log(`error: ${error}`)
@@ -843,7 +845,7 @@
             owner_list = obj;
 
 
-            getOwnerIdNone = owner_list[0].id
+            getOwnerIdNone = owner_list[0].id  // '+' 등으로 인해 선택이 없어질 경우 가장 첫번째 브랜드를 자동선택하기 위해서 변수에 넣어둠
 
 
 
@@ -883,7 +885,7 @@
 
 
           console.log("테이블 만들기")
-            make_table(obj);
+            make_table(obj);  //  테이블 만들기
           },
           error: function(xhr, status, error){
             console.log(`error: ${error}`)
@@ -902,7 +904,7 @@
 
         
 
-
+        //  사이드바 페이지별 show here active 설정
         nav = document.getElementById('menu-academy');
         nav.classList.add('show');
         nav.classList.add('here');
@@ -915,20 +917,20 @@
       $(document).on('click','#owners_list > tr',function(){
         newDiv = document.getElementById('submit');
         newDiv.innerHTML = `변경사항 저장`;
+        // 변경 모드의 경우 "변경사항 저장으로 바꾸기"
         $("#submit").addClass("submit");
         $("#submit").removeClass("add_submit");
         let td_val = $(this).parents().find().prevObject[0].className;
-        console.log("확인",$(this).parents().find());
-        console.log("확인2",$(this).parents().find().prevObject[0]);
+        
         let td_val_2 = $(this).parents().find().prevObject[0].id;
         done_button = $(this).find().prevObject[0];
         console.log("done_button",done_button);
         done_button.classList.add('on')
         num = done_button.id
-        console.log("cli!!!!!")
         
-        setCookie('ownerId',num,1)
-        listunclick(num);
+        
+        setCookie('ownerId',num,1)// 클릭한 오너 쿠키 저장
+        listunclick(num); // 클릭한 오너를 제외한 다른 오너 클릭 해제
         make_board();
       })
 
@@ -972,10 +974,12 @@
       
 
       //<-------------- 함수 정의 --------------->
+
+       // 클릭한 오너 제외 다른 오너 클릭 해제
       function listunclick(value){
-        console.log("val:",value)
-        console.log(owner_list)
-        owner_list.forEach((currentElement, index, array) => {
+        //console.log("val:",value)
+        //console.log(owner_list)
+        owner_list.forEach((currentElement, index, array) => { // 오너 리스트 순회
           if (currentElement.id != value) {
             const untempbtn = document.getElementsByClassName(`owner_list`)[index];
             
@@ -983,14 +987,15 @@
           }
         });
       }
-
+      // ownerlist 테이블을 만드는 함수
       function make_table(data){
         newDiv = document.getElementById('owners_list');
         newDiv.innerHTML = ``;
         for (row in data){
           
           row_data = data[row];
-          console.log("rd:",row_data)
+          // console.log("rd:",row_data)
+          // 상태에 따라 달라지는 클래스 구분
           if (row_data.status == "사용"){
             status_color = "success";
           } else if (row_data.status == "대기"){
@@ -1028,10 +1033,18 @@
               </td>
             </tr>`
         }
+        // 만약 '대기' 상태에서 클릭후  '사용' 상태로 온다면 실제쿠키에는 대기 에서 클릭한 owner가 저장되어있겠지만, getBranchId 변수에는 .ready에서 정의한 변수만 있을것임으로 
+        // 다시 한번 getOwnerId 를 최신화 시키고 현재 리스트에 해당 Owner 가 없을 경우 리스트의 첫번째 owner를 선택하도록 함
+        getOwnerId = getCookie('ownerId')
         if(getOwnerId != undefined){
-          console.log("getOwnerId",getOwnerId)
-          document.getElementById(getOwnerId).click();
-          console.log(document.getElementById(getOwnerId))
+          
+          
+          if(document.getElementById(getOwnerId)==null){
+            document.getElementById(getOwnerIdNone).click();
+          }else{
+            document.getElementById(getOwnerId).click();
+          }
+          
         }else{
 
           document.getElementById(getOwnerIdNone).click();
@@ -1040,6 +1053,7 @@
         call();
       }
 
+      // 필터와 보드에서 사용할 브랜드 리스트 정의
       function make_brand_list(data){
         
         newDiv = document.getElementById('brand');
@@ -1067,6 +1081,7 @@
         }
       }
 
+      // 보드 내부의 데이터 정의 
       function make_board_ajax(){
         let owner_id = done_button.id;
         console.log(owner_id);
@@ -1088,7 +1103,8 @@
         })
         return res;
       }
-
+      // 보드 생성
+      // 각 input 에 맞는 data 넣어주기
       function make_board(){
         let data = make_board_ajax();
         console.log("data:",data)
@@ -1105,6 +1121,7 @@
         
       }
 
+      // 오너 변경
       function submit_data(){
         let owner_id = done_button.id;
         let before_data = make_board_ajax();
@@ -1136,7 +1153,7 @@
           }
         })
       }
-
+      //  오너 추가
       function add_owner(){
         let owner_data = JSON.stringify({
           "username": $('#ownerUsername').val(),
@@ -1163,6 +1180,7 @@
           }
         })
       }
+      // 필터 설정
       function filterClick(){
         console.log("필터 클릭");
         var fiterBrandId = ""
@@ -1172,7 +1190,7 @@
         let cu = ""
 
         
-          
+          // status 에 따라서 넣을 status 변수 정의
         if(document.getElementsByName("InFilterStatus")[0].value=="1"){
           cu = "사용"
         }else if(document.getElementsByName("InFilterStatus")[0].value=="2"){
@@ -1194,7 +1212,7 @@
             
             "status":cu
         }
-        console.log("dt",data_t)
+        //console.log("dt",data_t)
        
           $.ajax({
           url: "https://farm01.bitlworks.co.kr/api/v1/users/owners",
@@ -1206,7 +1224,7 @@
             
             
             console.log("obj_owner",obj);
-            owner_list = obj;
+            owner_list = obj; // 리스트를 바꾸어 주어야 오너 클릭 이슈가 안생김
             // Datatable 의 reinitialize 를 없애기 위해 destroy
             $('#kt_ecommerce_edit_order_product_table').DataTable().destroy();
             make_table(obj);
@@ -1220,21 +1238,23 @@
         })
         
       }
+      // 필터에서 리셋이 클릭될경우 
       function resetClick(){
         console.log("reset 클릭");
 
-        document.getElementById("InFilterBrand").value="";
+        document.getElementById("InFilterBrand").value="";  // value 를 "" 로 바꿈으로써 전체 선택
 
-       
-       // document.getElementsByClassName("select2-selection__clear")[3].classList.add("hidden")
-        document.getElementsByName("InFilterStatus")[0].value = ""
+        document.getElementsByName("InFilterStatus")[0].value = ""// value 를 "" 로 바꿈으로써 전체 선택
 
+
+        // 존재하는 모든 form을 돌면서, 'x' 표시가 있는 경우 hidden 처리
         for (i = 0; i<document.getElementsByClassName("select2-selection__clear").length;i++){
          document.getElementsByClassName("select2-selection__clear")[i].classList.add("hidden")
         }
         
         console.log(document.getElementsByName("InFilterStatus"))
         
+            // form 안의 글자를 바꾸어줌
         $(".select2-selection__rendered").text("상태 선택");
         $("#select2-InFilterBrand-container").text("본사 선택");
         

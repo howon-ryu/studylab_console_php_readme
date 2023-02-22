@@ -754,6 +754,410 @@
               </div>
               <!--end::Footer container-->
             </div>
+                        <div class = "modal_student hidden">
+                          <div class="bg"></div>
+
+
+                          <div class = "modalBox_student">
+                          <div class="modal-header">
+                            <h2 class="fw-bold " data-kt-calendar="title">
+                              <span id = "tab_text1"> 학생정보<span> 
+                            </h2>
+
+                            <div
+                            class="btn btn-icon btn-sm btn-active-icon-primary closeBtn"
+                              id="kt_modal_add_event_close"
+                              
+                            >
+                              <span class="svg-icon svg-icon-1">
+                                <svg
+                                  width="24"
+                                  height="24"
+                                  viewBox="0 0 24 24"
+                                  fill="none"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                >
+                                  <rect
+                                    opacity="0.5"
+                                    x="6"
+                                    y="17.3137"
+                                    width="16"
+                                    height="2"
+                                    rx="1"
+                                    transform="rotate(-45 6 17.3137)"
+                                    fill="currentColor"
+                                  />
+                                  <rect
+                                    x="7.41422"
+                                    y="6"
+                                    width="16"
+                                    height="2"
+                                    rx="1"
+                                    transform="rotate(45 7.41422 6)"
+                                    fill="currentColor"
+                                  />
+                                </svg>
+                              </span>
+                            </div>
+                          </div>
+
+                          <div class="fv-row mb-9 modal_content">
+                          <div class="card-body pt-1 card_right_body right__tab_con right__tab01_con on">
+                          <div class="row mb-5">
+                            <!--begin::Col-->
+                            <div class="col-md-6 fv-row ">
+                              <!--begin::Label-->
+                              <label class="required fs-5 fw-semibold mb-2"
+                                >본사명</label
+                              >
+                              <input
+                                type="text"
+                                class="form-control"
+                                value=""
+                                name="brand"
+                                id = "brand"
+                                disabled
+                              />
+                            
+                            
+                            </select>
+                            </div>
+                            <!--end::Col-->
+                            <!--begin::Col-->
+                            <div class="col-md-6 fv-row">
+                              <!--end::Label-->
+                              <label class="required fs-5 fw-semibold mb-2"
+                                >지점명</label
+                              >
+                              <input
+                                type="text"
+                                class="form-control"
+                                value=""
+                                name="branch"
+                                id = "branch"
+                                disabled
+                              />
+                              
+                            
+                            </select>
+                              <!--end::Input-->
+                            </div>
+                            <!--end::Col-->
+                          </div>
+                          <div class="row mb-5">
+                            <!--begin::Col-->
+                            <div class="col-md-6 fv-row">
+                              <!--begin::Label-->
+                              <label class="required fs-5 fw-semibold mb-2"
+                                >학생명</label
+                              >
+                              <!--end::Label-->
+                              <!--begin::Input-->
+                              <input
+                                type="text"
+                                class="form-control"
+                                value=""
+                                name="realName"
+                                id = "realName"
+                                disabled
+                              />
+                            </div>
+                            <!--end::Col-->
+                            <!--begin::Col-->
+                            <div class="col-md-6 fv-row">
+                              <!--end::Label-->
+                              <label class="required fs-5 fw-semibold mb-2"
+                                >아이디</label
+                              >
+                              <!--end::Label-->
+                              <!--end::Input-->
+                              <input
+                                type="text"
+                                class="form-control "
+                                value=""
+                                name="userName"
+                                id = "userName"
+                                disabled
+                              />
+                              <!--end::Input-->
+                            </div>
+                            <!--end::Col-->
+                          </div>
+                          <div class="row mb-5">
+                            <!--begin::Col-->
+                            <div class="col-md-6 fv-row">
+                              <!--begin::Label-->
+                              <label class="required fs-5 fw-semibold mb-2"
+                                >비밀번호</label
+                              >
+                              <!--end::Label-->
+                              <!--begin::Input-->
+                              <input
+                                type="password"
+                                id="password"
+                                name="password"
+                                class="form-control"
+                                value=""
+                                disabled
+                                
+                              />
+                            </div>
+                            <!--end::Col-->
+                            <!--begin::Col-->
+                            <div class="col-md-6 fv-row">
+                              <!--end::Label-->
+                              <label class="required fs-5 fw-semibold mb-2"
+                                >비밀번호 확인</label
+                              >
+                              <!--end::Label-->
+                              <!--end::Input-->
+                              <input
+                                type="password"
+                                class="form-control"
+                                placeholder=""
+                                name=""
+                                id="passwordC"
+                                name="passwordC"
+                                disabled
+                              />
+                              <!--end::Input-->
+                            </div>
+                            <!--end::Col-->
+                          </div>
+                          <div class="row mb-5">
+                            <!--begin::Col-->
+                            <div class="col-md-6 fv-row">
+                              <!--begin::Label-->
+                              <label class="fs-5 fw-semibold mb-2"
+                                >전화번호</label
+                              >
+                              <!--end::Label-->
+                              <!--begin::Input-->
+                              <input
+                                type="text"
+                                class="form-control "
+                                name="phone"
+                                id="phone"
+                                disabled
+                              />
+                            </div>
+                            <!--end::Col-->
+                            <!--begin::Col-->
+                            <div class="col-md-6 fv-row">
+                              <!--end::Label-->
+                              <label class="fs-5 fw-semibold mb-2"
+                                >이메일</label
+                              >
+                              <!--end::Label-->
+                              <!--end::Input-->
+                              <input
+                                type="text"
+                                class="form-control "
+                                name="email"
+                                id = "email"
+                                disabled
+                              />
+                              <!--end::Input-->
+                            </div>
+                            <!--end::Col-->
+                          </div>
+                          <div class="row mb-5 ">
+                            <!--begin::Col-->
+                            <div class="col-md-6 fv-row input_50">
+                              <!--begin::Label-->
+                              <label class="required fs-5 fw-semibold mb-2"
+                                >주소</label
+                              >
+                              <!--end::Label-->
+                              <!--begin::Input-->
+                              <input
+                                type="text"
+                                class="form-control input_75"
+                                placeholder=""
+                                name="address"
+                                id= "address"
+                                disabled
+                                
+                              />
+                              
+                              
+                              <!--end::Input-->
+                            </div>
+                            <div class="col-md-6 fv-row">
+                              <!--end::Label-->
+                              <label class="fs-5 fw-semibold mb-2"
+                                >상세주소</label
+                              >
+                              <!--end::Label-->
+                              <!--end::Input-->
+                              <input
+                                type="text"
+                                class="form-control "
+                                name="detailAddress"
+                                id = "detailAddress"
+                                disabled
+                              />
+                              <!--end::Input-->
+                            </div>
+                            
+                            <!--end::Col-->
+                            <!--begin::Col-->
+                            
+                            <!--end::Col-->
+                          </div>
+                          <div class="row mb-5 ">
+                            <!--begin::Col-->
+                            <div class="col-md-6 fv-row">
+                              <!--begin::Label-->
+                              <label class="fs-5 fw-semibold mb-2"
+                                >학교</label
+                              >
+                              <!--end::Label-->
+                              <!--begin::Input-->
+                              <input
+                                type="text"
+                                class="form-control "
+                                value=""
+                                name="school"
+                                id="school"
+                                disabled
+                              />
+                            </div>
+                            <div class="col-md-6 fv-row ">
+                              <!--begin::Label-->
+                              <label class="required fs-5 fw-semibold mb-2"
+                                >학년</label
+                              >
+                              <!--end::Label-->
+                              <!--begin::Input-->
+
+                              <input
+                                type="text"
+                                class="form-control "
+                                value=""
+                                name="grade"
+                                id="grade"
+                                disabled
+                              />
+                              
+                              
+                            
+                              <!--end::Input-->
+                            </div>
+                            <!--end::Col-->
+                            <!--begin::Col-->
+                            
+                            <!--end::Col-->
+                          </div>
+                          <div class="row mb-5 ">
+                            <!--begin::Col-->
+                            <div class="col-md-6 fv-row">
+                              <!--begin::Label-->
+                              <label class="fs-5 fw-semibold mb-2"
+                                >학습실</label
+                              >
+                              <input
+                                type="text"
+                                class="form-control "
+                                value=""
+                                name="room"
+                                id="room"
+                                disabled
+                              />
+                              <!--end::Label-->
+                              <!--begin::Input-->
+                              
+                            </div>
+                            <div class="col-md-6 fv-row ">
+                              <!--begin::Label-->
+                              <label class="required fs-5 fw-semibold mb-2"
+                                >좌석번호</label
+                              >
+                              <input
+                                type="text"
+                                class="form-control "
+                                value=""
+                                name="seatNumber"
+                                id="seatNumber"
+                                disabled
+                              />
+                            </div>
+                            <!--end::Col-->
+                            <!--begin::Col-->
+                            
+                            <!--end::Col-->
+                          </div>
+                          <div class="row mb-5 ">
+                            <!--begin::Col-->
+                            <div class="col-md-6 fv-row ">
+                              <!--begin::Label-->
+                              <label class="fs-5 fw-semibold mb-2"
+                                >관리그룹</label
+                              >
+                              
+                              <input
+                                type="text"
+                                class="form-control "
+                                value=""
+                                name="group"
+                                id="group"
+                                disabled
+                              />
+                              <!--end::Label-->
+                              <!--begin::Input-->
+                              
+                            </div>
+                            
+                            <!--end::Col-->
+                            <!--begin::Col-->
+                            
+                            <!--end::Col-->
+                          </div>
+                          <div class="col-md-4 fv-row">
+                            <label class="fs-5 fw-semibold mb-2">상태</label>
+
+                            <div class="d-flex check__use_wrap">
+                              <div class="form-check form-check-custom form-check-solid me-5 ">
+                                <input
+                                  class="form-check-input check__use_input"
+                                  type="radio"
+                                  value="사용"
+                                  name="choice_use"
+                                  id = "status_active"
+                                  disabled
+                                  
+                                />
+                                <label class="form-check-label">사용</label>
+                              </div>
+                              <div class="form-check form-check-custom form-check-solid me-5 ">
+                                <input
+                                  class="form-check-input check__hold_input"
+                                  type="radio"
+                                  value="대기"
+                                  name="choice_use"
+                                  id = "status_stop"
+                                  disabled
+                                />
+                                <label class="form-check-label">대기</label>
+                              </div>
+                              <div class="form-check form-check-custom form-check-solid  use">
+                                <input
+                                  class="form-check-input check__delet_input"
+                                  type="radio"
+                                  value="삭제"
+                                  name="choice_use"
+                                  id = "status_delete"
+                                  disabled
+                                />
+                                <label class="form-check-label">삭제</label>
+                              </div>
+                            </div>
+                          </div>
+                        <div>
+                           
+
+                          </div>
+                        </div>
             <!--end::Footer-->
           </div>
           <!--end:::Main-->
@@ -1077,9 +1481,18 @@
 
 
         }
+        // 만약 '대기' 상태에서 클릭후  '사용' 상태로 온다면 실제쿠키에는 대기 에서 클릭한 dayplan가 저장되어있겠지만, getDayPlanId 변수에는 .ready에서 정의한 변수만 있을것임으로 
+        // 다시 한번 getDayPlanId 를 최신화 시키고 현재 리스트에 해당 dayplan 가 없을 경우 리스트의 첫번째 dayplan 선택하도록 함
+        getDayPlanId = getCookie('dayPlanId')
         if(getDayPlanId != undefined){
-          document.getElementById(getDayPlanId).click();
+          
           console.log(document.getElementById(getDayPlanId))
+          if(document.getElementById(getDayPlanId)==null){
+            document.getElementById(getDayPlanIdNone).click();
+          }else{
+            
+            document.getElementById(getDayPlanId).click();
+          }
         }else{
           console.log("undef!!!!!!")
           console.log(getDayPlanIdNone )
@@ -1454,6 +1867,94 @@
       }
 
       
+      function studentPop(prop){
+          console.log("prop",prop)
+          document.querySelector(".modal_student").classList.remove("hidden");
+
+
+
+          $.ajax({
+          url: "https://farm01.bitlworks.co.kr/api/v1/users/"+prop,
+          type: "get",
+          contentType:"application/json",
+          // data:studentData,
+          datatype: "JSON",
+          success: function(obj){
+            
+            
+            console.log(obj)
+            specStudentInfo = obj;
+            
+            
+            make_pop(specStudentInfo);
+
+          },
+          error: function(xhr, status, error){
+            console.log(`error: ${error}`)
+            console.log(`status: ${status}`)
+            return
+          }
+        })
+        }
+      $(document).on("click", ".closeBtn", function(){
+        document.querySelector(".modal_student").classList.add("hidden");
+      })
+      $(document).on("click", ".bg", function(){
+        document.querySelector(".modal_student").classList.add("hidden");
+      })
+      function make_pop(data){
+        console.log("make_pop_data",data)
+        let address = data.address.split('//')
+        
+        // $('#brand').val(data.brand.id).prop("selected",true);
+        $('#address').val(address[0])
+        $('#detailAddress').val(address[1])
+        // $('#address').val(data.address)
+        $('#brand').val(data.brand.id)
+        
+        $('#branch').val(data.branch.id)
+        
+        $('#school').val(data.school)
+        $('#grade').val(data.grade)
+        
+        
+        $('#realName').val(data.realName)
+        $('#password').val(data.password)
+        $('#passwordC').val(data.password)
+        console.log("sss data:",data.room)
+        if(data.room==null){
+          console.log("ss")
+          $("#select2-room-container").text("학습실 선택");
+        }else{
+          $('#room').val(data.room.id)
+        
+        }
+        if(data.group==null){
+          console.log("no group")
+          $("#select2-group-container").text("관리 그룹 선택");
+        }else{
+          $('#group').val(data.group.id)
+        
+        }
+        
+        $('#seatNumber').val(data.seatNumber)
+        $('#phone').val(data.phone)
+        $('#email').val(data.email)
+        $('#userName').val(data.username)
+
+        
+        //$('#room').prop('disabled',true);
+        
+        if(data.status =="사용"){
+          $('#status_active').val(data.status).prop("checked",true)
+        }
+        else if(data.status =="대기"){
+          $('#status_stop').val(data.status).prop("checked",true)
+        }
+        else{
+          $('#status_stop').val(data.status).prop("checked",true)
+        }
+      }
       function makeReprot(data){
         console.log("makeReprot",data)
         let kk = reviseData(data)
@@ -1477,7 +1978,7 @@
             { targets: 0, render: noRendering},
             { targets: 1, className: "text-gray-800 fw-bold"},
             { targets: 2, className: "" },
-            { targets: 3, className: "text-gray-800 fw-bold" },
+            { targets: 3, render: nameRendering,className: "text-gray-800 fw-bold" },
             { targets: 4, className: "" },
             { targets: 5, className: "text-gray-800 fw-bold" },
             { targets: 6, render: startTimeRendering,className: "fw-semibold text-gray-600" },
@@ -1598,6 +2099,15 @@
           return `<div>${tt[0]}<br/>${tt[1]}</div>`
         } 
 
+        function nameRendering(data, type, row){
+          // console.log("nowtime",data)
+          console.log("row",row.user.id)
+          let bb = row.user.id
+          
+
+          return `<div class = "namePop" onclick="studentPop(${bb})">${data}</div>`
+        } 
+        
 
         function nowTimeRendering(data, type, row){
           // console.log("nowtime",data)
@@ -1645,7 +2155,6 @@
         }
       
 
-      
       
     }
 

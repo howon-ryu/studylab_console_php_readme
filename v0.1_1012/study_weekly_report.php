@@ -1318,12 +1318,21 @@
          
         }
 
-        
+        // 만약 '대기' 상태에서 클릭후  '사용' 상태로 온다면 실제쿠키에는 대기 에서 클릭한 branch가 저장되어있겠지만, getWeeklyReport 변수에는 .ready에서 정의한 변수만 있을것임으로 
+        // 다시 한번 getWeeklyReportId 를 최신화 시키고 현재 리스트에 해당 WeeklyReport 가 없을 경우 리스트의 첫번째 WeeklyReport를 선택하도록 함
+        getWeeklyReportId = getCookie('weeklyReportId')
 
 
         if(getWeeklyReportId != undefined){
-          document.getElementById(getWeeklyReportId).click();
-          console.log(document.getElementById(getWeeklyReportId))
+          
+
+
+          if(document.getElementById(getWeeklyReportId)==null){
+            document.getElementById(getWeeklyReportIdNone).click();
+          }else{
+            document.getElementById(getWeeklyReportId).click();
+          }
+
         }else{
           console.log("undef!!!!!!")
           document.getElementById(getWeeklyReportIdNone).click();

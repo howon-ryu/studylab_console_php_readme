@@ -801,7 +801,7 @@
       let role_id = '<?=$_SESSION['roleid']?>';
       let brand_id = '<?=$_SESSION['brand_id']?>';
       let done_button = "";
-      let manage_list;
+      let manage_list; // list에 표시될 owner
       let owner_id = '<?=$_SESSION['owner_id']?>';
       let getManagerIdNone = 1;
       if(role_id == 3){
@@ -816,10 +816,13 @@
         // 매니저 리스트 ajax
        
         console.log("쿠키",getCookie('managerId'));
-        getManagerId = getCookie('managerId')
-        if(role_id == 1){
+        getManagerId = getCookie('managerId') //이전에 선택된 manager의 자동 선택을 위해, 쿠키에서 브랜드 저장
+
+        // managerList 가져오기
+        // role_id 가 1,2 의경우는 brand나 owner가 정해져 있음
+        if(role_id == 1){  
           let data_init = {
-            status:"사용"
+            status:"사용" //  처음 표시될 리스트의 기본 상태:  "사용"
           }
           $.ajax({
           url: "https://farm01.bitlworks.co.kr/api/v1/users/manager",
@@ -830,31 +833,31 @@
           data:data_init,
           success: function(obj){
             manage_list = obj;
-            getManagerIdNone = manage_list[0].id
+            getManagerIdNone = manage_list[0].id // '+' 등으로 인해 선택이 없어질 경우 가장 첫번째 매니저를 자동선택하기 위해서 변수에 넣어둠
             
 
 
 
 
-        // 브랜드 리스트 ajax
-        // 클릭 이수 make_brand_list 함수를 사용하면 본사명이 첫번째 항목으로 바뀌기에 make_brand_list 를 먼저하고 make_table을 하도록함
-        if (role_id == 1) brand_url = "https://farm01.bitlworks.co.kr/api/v1/brands";
-        else brand_url = "https://farm01.bitlworks.co.kr/api/v1/brands/" + brand_id;
-        $.ajax({
-          url: brand_url,
-          type: "get",
-          contentType:"application/json",
-          async: false, 
-          datatype: "JSON",
-          success: function(obj){
-            make_brand_list(obj);
-          },
-          error: function(xhr, status, error){
-            console.log(`error: ${error}`)
-            console.log(`status: ${status}`)
-            return
-          }
-        })
+                // 브랜드 리스트 ajax
+                // 클릭 이수 make_brand_list 함수를 사용하면 본사명이 첫번째 항목으로 바뀌기에 make_brand_list 를 먼저하고 make_table을 하도록함
+                if (role_id == 1) brand_url = "https://farm01.bitlworks.co.kr/api/v1/brands";
+                else brand_url = "https://farm01.bitlworks.co.kr/api/v1/brands/" + brand_id;
+                $.ajax({
+                  url: brand_url,
+                  type: "get",
+                  contentType:"application/json",
+                  async: false, 
+                  datatype: "JSON",
+                  success: function(obj){
+                    make_brand_list(obj);
+                  },
+                  error: function(xhr, status, error){
+                    console.log(`error: ${error}`)
+                    console.log(`status: ${status}`)
+                    return
+                  }
+                })
 
 
 
@@ -865,7 +868,7 @@
 
 
 
-            make_table(obj);
+                    make_table(obj);
           },
           error: function(xhr, status, error){
             console.log(`error: ${error}`)
@@ -891,25 +894,25 @@
 
 
 
-        // 브랜드 리스트 ajax
-        // 클릭 이수 make_brand_list 함수를 사용하면 본사명이 첫번째 항목으로 바뀌기에 make_brand_list 를 먼저하고 make_table을 하도록함
-        if (role_id == 1) brand_url = "https://farm01.bitlworks.co.kr/api/v1/brands";
-        else brand_url = "https://farm01.bitlworks.co.kr/api/v1/brands/" + brand_id;
-        $.ajax({
-          url: brand_url,
-          type: "get",
-          contentType:"application/json",
-          async: false, 
-          datatype: "JSON",
-          success: function(obj){
-            make_brand_list(obj);
-          },
-          error: function(xhr, status, error){
-            console.log(`error: ${error}`)
-            console.log(`status: ${status}`)
-            return
-          }
-        })
+            // 브랜드 리스트 ajax
+            // 클릭 이수 make_brand_list 함수를 사용하면 본사명이 첫번째 항목으로 바뀌기에 make_brand_list 를 먼저하고 make_table을 하도록함
+            if (role_id == 1) brand_url = "https://farm01.bitlworks.co.kr/api/v1/brands";
+            else brand_url = "https://farm01.bitlworks.co.kr/api/v1/brands/" + brand_id;
+            $.ajax({
+              url: brand_url,
+              type: "get",
+              contentType:"application/json",
+              async: false, 
+              datatype: "JSON",
+              success: function(obj){
+                make_brand_list(obj);
+              },
+              error: function(xhr, status, error){
+                console.log(`error: ${error}`)
+                console.log(`status: ${status}`)
+                return
+              }
+            })
 
 
 
@@ -920,8 +923,8 @@
 
 
 
-            make_table(obj);
-          },
+                make_table(obj);
+              },
           error: function(xhr, status, error){
             console.log(`error: ${error}`)
             console.log(`status: ${status}`)
@@ -934,42 +937,42 @@
             "brandId": brand_id,
             "ownerId": owner_id,
             "status":"사용"
-            
-        }
-          $.ajax({
-          url: "https://farm01.bitlworks.co.kr/api/v1/users/manager",
-          type: "get",
-          contentType:"application/json",
-          data:data_t,
-          datatype: "JSON",
-          async: false, 
-          success: function(obj){
-            
-            console.log("ml",obj)
-            manage_list = obj;
-            getManagerIdNone = manage_list[0].id
+                  
+              }
+                $.ajax({
+                url: "https://farm01.bitlworks.co.kr/api/v1/users/manager",
+                type: "get",
+                contentType:"application/json",
+                data:data_t,
+                datatype: "JSON",
+                async: false, 
+                success: function(obj){
+                  
+                  console.log("ml",obj)
+                  manage_list = obj;
+                  getManagerIdNone = manage_list[0].id
 
 
 
-        // 브랜드 리스트 ajax
-        // 클릭 이수 make_brand_list 함수를 사용하면 본사명이 첫번째 항목으로 바뀌기에 make_brand_list 를 먼저하고 make_table을 하도록함
-        if (role_id == 1) brand_url = "https://farm01.bitlworks.co.kr/api/v1/brands";
-        else brand_url = "https://farm01.bitlworks.co.kr/api/v1/brands/" + brand_id;
-        $.ajax({
-          url: brand_url,
-          type: "get",
-          contentType:"application/json",
-          async: false, 
-          datatype: "JSON",
-          success: function(obj){
-            make_brand_list(obj);
-          },
-          error: function(xhr, status, error){
-            console.log(`error: ${error}`)
-            console.log(`status: ${status}`)
-            return
-          }
-        })
+              // 브랜드 리스트 ajax
+              // 클릭 이수 make_brand_list 함수를 사용하면 본사명이 첫번째 항목으로 바뀌기에 make_brand_list 를 먼저하고 make_table을 하도록함
+              if (role_id == 1) brand_url = "https://farm01.bitlworks.co.kr/api/v1/brands";
+              else brand_url = "https://farm01.bitlworks.co.kr/api/v1/brands/" + brand_id;
+              $.ajax({
+                url: brand_url,
+                type: "get",
+                contentType:"application/json",
+                async: false, 
+                datatype: "JSON",
+                success: function(obj){
+                  make_brand_list(obj);
+                },
+                error: function(xhr, status, error){
+                  console.log(`error: ${error}`)
+                  console.log(`status: ${status}`)
+                  return
+                }
+              })
 
 
 
@@ -997,7 +1000,7 @@
 
 
 
-
+        //  사이드바 페이지별 show here active 설정
 
 
         nav = document.getElementById('menu-academy');
@@ -1015,6 +1018,7 @@
       $(document).on('click','#manager_list > tr',function(){
         newDiv = document.getElementById('submit');
         newDiv.innerHTML = `변경사항 저장`;
+        // 변경 모드의 경우 "변경사항 저장으로 바꾸기"
         $("#submit").addClass("submit");
         $("#submit").removeClass("add_submit");
 
@@ -1024,9 +1028,9 @@
 
         done_button.classList.add('on')
         num = done_button.id
-        setCookie('managerId',num,1)
+        setCookie('managerId',num,1) // 클릭한 매니저 쿠키 저장
         
-        listunclick(num);
+        listunclick(num);// 클릭한 매니저를 제외한 다른 매니저 클릭 해제
         make_board();
       })
 
@@ -1071,11 +1075,12 @@
         $("#submit").addClass("add_submit");
         $("#submit").removeClass("submit");
 
-        $("#select2-brand-container").text("본사를 선택하세요.");
-        $("#select2-owner-container").text("원장을 선택하세요.");
-        console.log("brand_id",brand_id)
+        $("#select2-brand-container").text("본사를 선택하세요."); // select 태그 text 바꾸어주기
+        $("#select2-owner-container").text("원장을 선택하세요."); // select 태그 text 바꾸어주기
+        //console.log("brand_id",brand_id)
         $('#brand').val("").prop("selected",true);
         
+        // 폼 초기화
         $('#manager').val("");
         $('#managerUsername').val("");
         $('#tel').val("");
@@ -1086,6 +1091,7 @@
 
       //<-------------- 함수 정의 --------------->
 
+      // 클릭한 매니저 제외 다른 매니저 클릭 해제
       function listunclick(value){
         manage_list.forEach((currentElement, index, array) => {
           if (currentElement.id != value) {
@@ -1100,6 +1106,7 @@
         newDiv.innerHTML = ``;
         for (row in data){
           row_data = data[row];
+          // 상태에 따라 달라지는 클래스 구분
           if (row_data.status == "사용"){
             status_color = "success";
           } else if (row_data.status == "대기"){
@@ -1131,9 +1138,18 @@
               </td>
             </tr>`
         }
+        // 만약 '대기' 상태에서 클릭후  '사용' 상태로 온다면 실제쿠키에는 대기 에서 클릭한 manager가 저장되어있겠지만, getBranchId 변수에는 .ready에서 정의한 변수만 있을것임으로 
+        // 다시 한번 getManagerId 를 최신화 시키고 현재 리스트에 해당 manager 가 없을 경우 리스트의 첫번째 manager 선택하도록 함
+        getManagerId = getCookie('managerId')
         if(getManagerId != undefined){
-          document.getElementById(getManagerId).click();
-          console.log(document.getElementById(getManagerId))
+          
+          
+          if(document.getElementById(getManagerId)==null){
+            document.getElementById(getManagerIdNone).click();
+          }else{
+            
+            document.getElementById(getManagerId).click();
+          }
         }else{
           console.log("undef!!!!!!")
           document.getElementById(getManagerIdNone).click();
@@ -1143,9 +1159,9 @@
 
       // 학원본사 select 리스트 만들어주는 함수
       function make_brand_list(data){
-        console.log("makeBrand실행")
-        InFilterNewDiv = document.getElementById('InFilterBrand');
-        newDiv = document.getElementById('brand');
+        //console.log("makeBrand실행")
+        InFilterNewDiv = document.getElementById('InFilterBrand'); // 필터 브랜드 리스트
+        newDiv = document.getElementById('brand'); // 보드 브랜드 리스트
         newDiv.innerHTML = ``;
         newDiv.innerHTML += `<option type="button" value=""></option>`;
         InFilterNewDiv.innerHTML +=`<option type="button" value=""></option>`;
@@ -1173,7 +1189,7 @@
         let selected_brand_id = $('#brand').val();
         //let selected_brand_id = $('#InFilterBrand').val();
         let res;
-        if(role_id != 3){
+        if(role_id != 3){  // 오너 제외
           $.ajax({
           url: "https://farm01.bitlworks.co.kr/api/v1/users/owners?brandId="+selected_brand_id,
           type: "GET",
@@ -1189,13 +1205,13 @@
           }
         })
 
-        newDiv = document.getElementById('owner');
+        newDiv = document.getElementById('owner'); // 보드 오너 리스트 
         newDiv.innerHTML = ``;
         for (row in res){
           row_data = res[row];
           newDiv.innerHTML += `<option type="button" value="${row_data.id}">${row_data.realName}</option>`;
         }
-        InFilterNewDiv = document.getElementById('InFilterOwner');
+        InFilterNewDiv = document.getElementById('InFilterOwner'); // 필터 오너 리스트
         InFilterNewDiv.innerHTML = ``;
         
           for (row in res){
@@ -1203,7 +1219,7 @@
             InFilterNewDiv.innerHTML += `<option type="button" value="${row_data.id}">${row_data.name}</option>`;
           }
         
-        }else{
+        }else{ // 오너 일 경우
           $.ajax({
               url: "https://farm01.bitlworks.co.kr/api/v1/users/"+owner_id,
               type: "get",
@@ -1333,6 +1349,7 @@
           }
         })
       }
+      // 필터 설정
       function filterClick(){
         console.log("필터 클릭");
         var fiterBrandId = ""
@@ -1343,7 +1360,7 @@
         let cu = ""
 
         
-          
+          // status 에 따라서 넣을 status 변수 정의
         if(document.getElementsByName("InFilterStatus")[0].value=="1"){
           cu = "사용"
         }else if(document.getElementsByName("InFilterStatus")[0].value=="2"){
@@ -1371,7 +1388,7 @@
             "managerId" : "",
             "status":cu
         }
-        console.log("dt",data_t)
+        //console.log("dt",data_t)
         $.ajax({
           url: "https://farm01.bitlworks.co.kr/api/v1/users/manager",
           type: "get",
@@ -1380,7 +1397,7 @@
           datatype: "JSON",
           success: function(obj){
             
-            manage_list = obj;
+            manage_list = obj;// 리스트를 바꾸어 주어야 매니저 클릭 이슈가 안생김
             console.log(obj);
             // Datatable 의 reinitialize 를 없애기 위해 destroy
             $('#kt_ecommerce_edit_order_product_table').DataTable().destroy();
@@ -1394,29 +1411,24 @@
           }
         })
       }
+      // 필터에서 리셋이 클릭될경우 
       function resetClick(){
         console.log("reset 클릭");
 
-        document.getElementById("InFilterBrand").value="";
-
-        //document.getElementsByClassName("select2-selection__clear")[0].classList.add("hidden")
-        console.log(document.getElementsByClassName("select2-selection__clear"))
+        document.getElementById("InFilterBrand").value=""; // value 를 "" 로 바꿈으로써 전체 선택
         
-        
-        
-        document.getElementById("InFilterOwner").value="";
-       // document.getElementsByClassName("select2-selection__clear")[1].classList.add("hidden")
-        
+        document.getElementById("InFilterOwner").value=""; // value 를 "" 로 바꿈으로써 전체 선택
        
-       // document.getElementsByClassName("select2-selection__clear")[3].classList.add("hidden")
-        document.getElementsByName("InFilterStatus")[0].value = ""
+        document.getElementsByName("InFilterStatus")[0].value = "" // value 를 "" 로 바꿈으로써 전체 선택
 
+        // 존재하는 모든 form을 돌면서, 'x' 표시가 있는 경우 hidden 처리
         for (i = 0; i<document.getElementsByClassName("select2-selection__clear").length;i++){
          document.getElementsByClassName("select2-selection__clear")[i].classList.add("hidden")
         }
         
         console.log(document.getElementsByName("InFilterStatus"))
         
+        // form 안의 글자를 바꾸어줌
         $(".select2-selection__rendered").text("상태 선택");
         $("#select2-InFilterBrand-container").text("본사 선택");
         $("#select2-InFilterOwner-container").text("원장 선택");
@@ -1429,14 +1441,15 @@
         
        
       }
+      // 필터 내부에서 브랜드 변화를 감지하면
       function handleOnChangeBrand(prop){
-        console.log("brandchange",prop.value);
+        //console.log("brandchange",prop.value);
         
         
-        $('#InFilterOwner').prop('disabled',false);
-        console.log("owner_id",owner_id)
+        $('#InFilterOwner').prop('disabled',false); // 오너의 disabled를 해제
+        //console.log("owner_id",owner_id)
         
-        if(<?=$_SESSION['roleid']?> == 3){
+        if(<?=$_SESSION['roleid']?> == 3){ // role_id == 3이면 이미 브랜드와 오너가 정해져 있음
             $.ajax({
               url: "https://farm01.bitlworks.co.kr/api/v1/users/"+owner_id,
               type: "get",
@@ -1453,7 +1466,7 @@
                 return
               }
             })
-          }else{
+          }else{ // 오너가 아닌경우
             makeOwnerList(prop.value);
           }
         
@@ -1461,9 +1474,11 @@
 
 
       }
+
+      // 필터 내부의 오너 리스트 만들기
       function makeOwnerList(prop){
         let res;
-        console.log("makeOwnerList",prop)
+        //console.log("makeOwnerList",prop)
         $.ajax({
           url: "https://farm01.bitlworks.co.kr/api/v1/users/owners?brandId="+prop,
           type: "GET",
@@ -1487,7 +1502,7 @@
           InFilterNewDiv.innerHTML += `<option type="button" value="${row_data.id}">${row_data.realName}</option>`;
         }
       }
-      function makeFilterOwnerOne(data){
+      function makeFilterOwnerOne(data){ // role 이 오너인경우 오너 리스트에 나올 오너는 한명 밖에 없음
         
         InFilterNewDiv = document.getElementById('InFilterOwner');
         

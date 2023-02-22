@@ -1448,12 +1448,18 @@
         }
 
 
-
+        // 만약 '대기' 상태에서 클릭후  '사용' 상태로 온다면 실제쿠키에는 대기 에서 클릭한 weeklyPlan가 저장되어있겠지만, getWeeklyPlanId 변수에는 .ready에서 정의한 변수만 있을것임으로 
+        // 다시 한번 getWeeklyPlanId 를 최신화 시키고 현재 리스트에 해당 weeklyPlan 가 없을 경우 리스트의 첫번째 weeklyPlan를 선택하도록 함
+        getWeeklyPlanId = getCookie('weeklyPlanId')
 
 
         if(getWeeklyPlanId != undefined){
-          document.getElementById(getWeeklyPlanId).click();
-          console.log(document.getElementById(getWeeklyPlanId))
+          
+          if(document.getElementById(getWeeklyPlanId)==null){
+            document.getElementById(getWeeklyPlanIdNone).click();
+          }else{
+            document.getElementById(getWeeklyPlanId).click();
+          }
         }else{
           console.log("undef!!!!!!")
           document.getElementById(getWeeklyPlanIdNone).click();

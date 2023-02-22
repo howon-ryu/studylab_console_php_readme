@@ -43,8 +43,13 @@
 .modal_manage .bg {
   width: 100%;
   height: 100%;
+  z-index: 106;
+  position: fixed;
+
   background-color: rgba(0, 0, 0, 0.6);
 }
+
+
 
 .modalBox_manage {
   position: absolute;
@@ -52,6 +57,7 @@
   width: 550px;
   height: 350px;
   padding: 15px;
+  z-index: 107;
 }
 
 .modalBox_manage button {
@@ -64,6 +70,51 @@
   display: block;
   width: 80px;
   margin-left: 0;
+}
+
+.modal_student {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal_student .bg {
+  width: 100%;
+  height: 100%;
+  z-index: 106;
+  position: fixed;
+
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+.modalBox_student {
+  position: absolute;
+  background-color: #fff;
+  width: 800px;
+  height: 860px;
+  padding: 15px;
+  z-index: 107;
+}
+
+.modalBox_student button {
+  display: block;
+  width: 80px;
+  margin: 0 auto;
+}
+
+.modalBox_student button#kt_modal_add_event_submit {
+  display: block;
+  width: 80px;
+  margin-left: 0;
+}
+
+.namePop {
+  cursor: pointer;
 }
 
 .hidden {

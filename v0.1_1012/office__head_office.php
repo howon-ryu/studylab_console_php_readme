@@ -1103,8 +1103,17 @@
         
         //console.log("getBrandId",getBrandId)
         // 선택했던 브랜드가 쿠키에 있다면 해당 브랜드를 강제 선택
+        // 만약 '대기' 상태에서 클릭후  '사용' 상태로 온다면 실제쿠키에는 대기 에서 클릭한 brand가 저장되어있겠지만, getBrandId 변수에는 .ready에서 정의한 변수만 있을것임으로 
+        // 다시 한번 getBrandId 를 최신화 시키고 현재 리스트에 해당 Brand 가 없을 경우 리스트의 첫번째 brand를 선택하도록 함
+        getBrandId = getCookie('brandId')
         if(getBrandId != undefined){
-          document.getElementById(getBrandId).click();
+          
+          if(document.getElementById(getBrandId)==null){
+            document.getElementById(getBrandIdNone).click();
+          }else{
+            
+            document.getElementById(getBrandId).click();
+          }
           
         }else{
           
@@ -1140,7 +1149,7 @@
         }
         num = tr_button.id 
         setCookie('brandId',num,1) // 클릭한 브랜드 쿠키 저장
-        listunclick(num); // 클릭한 브랜드를 제외한 다른 브랜드 클랙 해제
+        listunclick(num); // 클릭한 브랜드를 제외한 다른 브랜드 클릭 해제
         brandId = num; 
         console.log("select brand id:",brandId);
         

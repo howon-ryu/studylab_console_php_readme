@@ -1318,6 +1318,8 @@
         done_button.classList.add('on')
         num = done_button.id
         setCookie('branchId',num,1)
+        
+        console.log("get_goco",num)
         listunclick(num);
         make_board();
         // 원장에서 onchange 가 안먹어서 make_manager_list 가 실행이 안될수도 잇음으로 한번더 실행
@@ -1602,8 +1604,17 @@
                 </td>
               </tr>`;
         }
+        // '대기' 상태에서 클릭후  '사용' 상태로 온다면 실제쿠키에는 대기 에서 클릭한 branch가 저장되어있겠지만, getBranchId 변수에는 .ready에서 정의한 변수만 있을것임으로 
+        // 다시 한번 getBranchId 를 최신화 시키고 현재 리스트에 해당 Branch 가 없을 경우 리스트의 첫번째 branch를 선택하도록 함
+        getBranchId = getCookie('branchId')
         if(getBranchId != undefined){
-          document.getElementById(getBranchId).click();
+          
+          if(document.getElementById(getBranchId)==null){
+            document.getElementById(getBranchIdNone).click();
+          }else{
+            document.getElementById(getBranchId).click();
+          }
+          
           
           console.log(document.getElementById(getBranchId))
         }else{
