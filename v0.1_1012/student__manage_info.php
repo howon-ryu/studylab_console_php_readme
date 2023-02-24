@@ -39,6 +39,7 @@
   }else{
     $branchId = $_SESSION['branchId'];
   }
+  
 ?>
 
 <!DOCTYPE html>
@@ -903,6 +904,7 @@
                                 data-control="select2"
                                 data-placeholder="학습실을 선택해주세요"
                                 class="form-select form-select-solid form_color"
+                                onchange = "handleOnChangeRoom(this)"
                               >
                               </select>
                               <!--end::Label-->
@@ -914,14 +916,17 @@
                               <label class="required fs-5 fw-semibold mb-2"
                                 >좌석번호</label
                               >
-                              <input
-                                type="text"
-                                class="form-control "
-                                value=""
+                              
+                              <select
+                                
+                                id = "seatNumber"
                                 name="seatNumber"
-                                id="seatNumber"
-
-                              />
+                                
+                                data-control="select2"
+                                data-placeholder="좌석을 선택해주세요"
+                                class="form-select form-select-solid form_color"
+                              >
+                              </select>
                             </div>
                             <!--end::Col-->
                             <!--begin::Col-->
@@ -1440,6 +1445,7 @@
       }else{
         branchId = ""
       }
+      
       // data_t 를 위한  변수 -end
 
 
@@ -1805,9 +1811,17 @@
             console.log(`status: ${status}`)
             return
           }
-        })
+          })
           
         }
+
+       
+
+
+
+
+
+
       }
     // 좌측 학생 리스트를 만들어주는 함수
       function make_table(data){
@@ -1951,6 +1965,7 @@
             let forManager = {
               brandId : specStudentInfo.brand.id,
               branchId : specStudentInfo.branch.id,
+              roomId : specStudentInfo.room.id,
             }
             makeBoardManager(forManager);
             make_board(specStudentInfo);
@@ -2002,8 +2017,13 @@
         // $('#address').val(data.address)
         $('#brand').val(data.brand.id).prop("selected",true);
         $("#select2-brand-container").text(data.brand.name);
+
         $('#branch').val(data.branch.id).prop("selected",true);
         $("#select2-branch-container").text(data.branch.name);
+
+        $('#seatNumber').val(data.seatNumber).prop("selected",true);
+        
+
         $('#school').val(data.school)
         $('#grade').val(data.grade).prop("selected",true);
         $("#select2-grade-container").text(data.grade);
@@ -2028,13 +2048,14 @@
         $("#select2-group-container").text(data.group.name);
         }
         
-        $('#seatNumber').val(data.seatNumber)
+        //$('#seatNumber').val(data.seatNumber)
         $('#phone').val(data.phone)
         $('#email').val(data.email)
         $('#userName').val(data.username)
 
         $('#brand').prop('disabled',true);
         $('#branch').prop('disabled',true);
+        // $('#seatNumber').prop('disabled',true);
         //$('#room').prop('disabled',true);
         
         if(data.status =="사용"){
@@ -2291,6 +2312,15 @@
         
         makeGroupList(prop.value);
       }
+      function handleOnChangeRoom(prop){
+        console.log("roomchange",prop.value);
+        // $('#seatNumber').prop('disabled',false);
+        
+        makeSeatList(prop.value);
+        
+        $('#seatNumber').val(specStudentInfo.seatNumber).prop("selected",true);
+        
+      }
       function makeBranchList(prop){
         let res;
         const data_t ={
@@ -2397,6 +2427,48 @@
           InFilterNewDiv.innerHTML += `<option type="button" value="${row_data.id}">${row_data.name}</option>`;
         }
       }
+      function makeSeatList(prop){
+        
+        console.log("makeSeatList");
+        $.ajax({
+          url: "https://farm01.bitlworks.co.kr/api/v1/branches/rooms/"+prop+"/seats",
+          type: "get",
+          async: false, 
+          contentType:"application/json",
+          // data:studentData,
+          datatype: "JSON",
+          success: function(obj){
+            console.log("seatSetting",obj);
+            ress = obj
+          },
+          error: function(xhr, status, error){
+            console.log(`error: ${error}`)
+            console.log(`status: ${status}`)
+            return
+          }
+        })
+
+        newDiv = document.getElementById('seatNumber');
+        newDiv.innerHTML = ``;
+        
+        // ress.forEach((currentValue, index, arr) => {
+        //   console.log('Index: ' + index + ' Value: ' + currentValue+'arr'+arr);
+        // });
+        for (row in ress){
+          row_data = ress[row];
+          // console.log(row,row_data)
+          if(row_data==null){
+            row_data = {
+              "realName": " "
+            }
+            // console.log(row_data.realName)
+          }else{
+            row_data.realName = "("+row_data.realName+")"
+          }
+          newDiv.innerHTML += `<option type="button" value="${row}">${row} ${row_data.realName}</option>`;
+        }
+        
+      }
       function makeBoardManager(data){
         $.ajax({
           url: "https://farm01.bitlworks.co.kr/api/v1/branches/"+data.branchId+"/rooms",
@@ -2465,6 +2537,50 @@
           row_data = g_data[row];
           newDiv.innerHTML += `<option value="${row_data.id}">${row_data.name}</option>`
         }
+
+        console.log("!!!!",data);
+        // 좌석번호 리스트 만들기
+        $.ajax({
+          url: "https://farm01.bitlworks.co.kr/api/v1/branches/rooms/"+data.roomId+"/seats",
+          type: "get",
+          async: false, 
+          contentType:"application/json",
+          // data:studentData,
+          datatype: "JSON",
+          success: function(obj){
+            console.log("seatSetting",obj);
+            ress = obj
+          },
+          error: function(xhr, status, error){
+            console.log(`error: ${error}`)
+            console.log(`status: ${status}`)
+            return
+          }
+        })
+
+        newDiv = document.getElementById('seatNumber');
+        newDiv.innerHTML = ``;
+        
+        // ress.forEach((currentValue, index, arr) => {
+        //   console.log('Index: ' + index + ' Value: ' + currentValue+'arr'+arr);
+        // });
+        for (row in ress){
+          row_data = ress[row];
+          // console.log(row,row_data)
+          if(row_data==null){
+            row_data = {
+              "realName": " "
+            }
+            // console.log(row_data.realName)
+          }else{
+            row_data.realName = "("+row_data.realName+")"
+          }
+          newDiv.innerHTML += `<option type="button" value="${row}">${row} ${row_data.realName}</option>`;
+        }
+
+
+
+
       };
      // '변경사항 저장' 버튼 클릭 시,
      $(document).on('click', '.submit', function(){

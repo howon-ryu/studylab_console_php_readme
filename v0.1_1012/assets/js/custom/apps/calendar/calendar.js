@@ -6,6 +6,7 @@ var KTAppCalendar = function() {
     var calendar;
     var data = {
         id: '',
+        eventCode: '',//  따로 정의한 eventCode
         eventName: '',
         eventDescription: '',
         eventLocation: '',
@@ -17,6 +18,7 @@ var KTAppCalendar = function() {
     var popoverState = false; 
     // Add event variables    
     var eventName;
+    var eventCode //  따로 정의한 eventCode
     var eventDescription;
     var eventLocation;
     var startDatepicker;
@@ -34,7 +36,8 @@ var KTAppCalendar = function() {
     var addButton;
     var submitButton;
     var cancelButton;
-    // View event variables    
+    // View event variables 
+    var viewEventCode;   
     var viewEventName;
     var viewAllDay;
     var viewEventDescription;
@@ -75,7 +78,8 @@ var KTAppCalendar = function() {
                 handleNewEvent();
             }, // Click event --- more info: https://fullcalendar.io/docs/eventClick          
             eventClick: function(arg) {
-                console.log("pop",popoverState)
+                
+                console.log(arg)
                 hidePopovers();
                 formatArgs({
                     id: arg.event.id,
@@ -84,7 +88,8 @@ var KTAppCalendar = function() {
                     location: arg.event.extendedProps.location,
                     startStr: arg.event.startStr,
                     endStr: arg.event.endStr,
-                    allDay: arg.event.allDay
+                    allDay: arg.event.allDay,
+                    itemCode: arg.event.extendedProps.itemCode
                 });
                 //popover.dispose();
                 // popover.hide();
@@ -135,6 +140,7 @@ var KTAppCalendar = function() {
                             end: item.endTime,
                             description: item.description,
                             location: item.place,
+                            itemCode:item.itemCode
                         });
                         });
                         // return
@@ -195,7 +201,7 @@ var KTAppCalendar = function() {
                 'calendar_event_name': {
                     validators: {
                         notEmpty: {
-                            message: '학습 항목d이 필요합니다.'
+                            message: '학습 항목이 필요합니다.'
                         }
                     }
                 },
@@ -271,7 +277,7 @@ var KTAppCalendar = function() {
                             description: eventDescription.value,
                             location: eventLocation.value,
                             start: startDatepicker.value+"T"+startTimepicker.value,
-                            
+                            itemCode :eventCode.value,
                             //end: endDatepicker.value+"T"+endTimepicker.value, 
                             end: startDatepicker.value+"T"+endTimepicker.value, // 현재 종료일은 hidden 으로 처리되어있어,시작 날짜를 바꾸면 종료일이 깨짐 따라서 날짜는 무조건 시작 날짜로 고정!
                             allDay: data.allDay,
@@ -346,12 +352,14 @@ var KTAppCalendar = function() {
                         submitButton.removeAttribute('data-kt-indicator');
                         var addNewEventData = {
                             title: eventName.value,
+                            itemCode :eventCode.value,
                             description: eventDescription.value,
                             location: eventLocation.value,
                             start: startDatepicker.value+"T"+startTimepicker.value,
                             end: endDatepicker.value+"T"+endTimepicker.value,
                             allDay: data.allDay,
                         };
+                        
                         addplan(addNewEventData);
                         // Show popup confirmation                
                         Swal.fire({
@@ -417,7 +425,8 @@ var KTAppCalendar = function() {
     // Handle edit event    
     const handleEditEvent = () => {
         // Update modal title   
-        modalTitle.innerText = "항목 수정";        
+        modalTitle.innerText = "항목 수정";     
+        console.log("modal",modal)   
         modal.show();
         // Select datepicker wrapper elements   
         const datepickerWrappers = form.querySelectorAll('[data-kt-calendar=\"datepicker\"]');
@@ -435,7 +444,7 @@ var KTAppCalendar = function() {
                 });
             }
         });
-        console.log("data", data);
+        console.log("editdata", data);
         populateForm(data);
         // Handle submit form     
         submitButton.removeEventListener('click', editEvent);
@@ -465,12 +474,18 @@ var KTAppCalendar = function() {
             startDateMod = moment(data.startDate).format('Do MMM, YYYY - h:mm a');
             endDateMod = moment(data.endDate).format('Do MMM, YYYY - h:mm a');
         }
-        console.log(data,startDateMod,endDateMod)
+        console.log("dd",data,startDateMod,endDateMod)
         let temp_start = data.startDate.substr(0,10)+"  "+data.startDate.substr(11,8)
         let temp_end = data.endDate.substr(0,10)+"  "+data.endDate.substr(11,8)
         console.log(temp_start,temp_end)
         // Populate view data       
-        viewEventName.innerText = data.eventName;
+        if(data.eventCode==null){
+            data.eventCode = {
+                "name" : "기타"
+            }
+        }
+        viewEventName.innerText = data.eventName ;
+        viewEventCode.innerText = data.eventCode.name+ ' |';
         viewAllDay.innerText = eventNameMod;
         viewEventDescription.innerText = data.eventDescription ? data.eventDescription : '--';
         viewEventLocation.innerText = data.eventLocation ? data.eventLocation : '--';
@@ -578,7 +593,9 @@ var KTAppCalendar = function() {
     }
     // Populate form   
     const populateForm = () => {
+        console.log("po_data",data);
         eventName.value = data.eventName ? data.eventName : '';
+        eventCode.value = data.eventCode ? data.eventCode : '';
         eventDescription.value = data.eventDescription ? data.eventDescription : '';
         eventLocation.value = data.eventLocation ? data.eventLocation : '';
         startFlatpickr.setDate(data.startDate, true, 'Y-m-d');
@@ -606,6 +623,7 @@ var KTAppCalendar = function() {
         console.log("res",res)
         data.id = res.id;
         data.eventName = res.title;
+        data.eventCode = res.itemCode;
         data.eventDescription = res.description;
         data.eventLocation = res.location;
         data.startDate = res.startStr;
@@ -622,6 +640,7 @@ var KTAppCalendar = function() {
             // Add event modal          
             const element = document.getElementById('kt_modal_add_event');
             form = element.querySelector('#kt_modal_add_event_form');
+            eventCode = form.querySelector('[name="calendar_event_code"]');//  따로 정의한 eventCode
             eventName = form.querySelector('[name="calendar_event_name"]');
             eventDescription = form.querySelector('[name=\"calendar_event_description\"]');
             eventLocation = form.querySelector('[name=\"calendar_event_location\"]');
@@ -637,6 +656,7 @@ var KTAppCalendar = function() {
             // View event modal            
             const viewElement = document.getElementById('kt_modal_view_event');
             viewModal = new bootstrap.Modal(viewElement);
+            viewEventCode = viewElement.querySelector('[data-kt-calendar=\"event_code\"]');
             viewEventName = viewElement.querySelector('[data-kt-calendar=\"event_name\"]');
             viewAllDay = viewElement.querySelector('[data-kt-calendar=\"all_day\"]');
             viewEventDescription = viewElement.querySelector('[data-kt-calendar=\"event_description\"]');

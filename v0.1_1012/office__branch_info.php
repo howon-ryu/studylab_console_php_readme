@@ -455,6 +455,7 @@
                                 <div class="fs-4 fw-bold pb-3 border-3 border-primary cursor-pointer right__tab_btn right__tab01_btn on" data-kt-table-widget-3="tab" data-kt-table-widget-3-value="Show All">상세정보</div>
                                 <div class="fs-4 fw-bold text-muted pb-3 cursor-pointer right__tab_btn right__tab02_btn" data-kt-table-widget-3="tab" data-kt-table-widget-3-value="Pending">관리그룹</div>
                                 <div class="fs-4 fw-bold text-muted pb-3 cursor-pointer right__tab_btn right__tab03_btn" data-kt-table-widget-3="tab" data-kt-table-widget-3-value="Pending">학습실</div>
+                                <div class="fs-4 fw-bold text-muted pb-3 cursor-pointer right__tab_btn right__tab04_btn" data-kt-table-widget-3="tab" data-kt-table-widget-3-value="Pending">코드관리</div>
                               
                               
                               <!-- <div class="fs-4 fw-bold text-muted pb-3 cursor-pointer right__tab_btn right__tab04_btn" data-kt-table-widget-3="tab" data-kt-table-widget-3-value="Pending">알림톡 설정</div> -->
@@ -775,6 +776,7 @@
                                   <th class="min-w-25px">NO.</th>
                                   <th class="min-w-150px">학습실 이름</th>
                                   <th class="min-w-100px">좌석수</th>
+                                  <th class="min-w-100px">좌석시작번호</th>
                                   <th class="min-w-100px text-end"> 사용여부</th>
                                   <th class="min-w-100px text-end"> 관리</th>
                                 </tr>
@@ -788,6 +790,36 @@
                             <!--end::Table-->
                           </div>
                           <!--end::bt__tab03_table group-->
+                        </div>
+                        <div class="card-body pt-1 card_right_body right__tab_con right__tab04_con">
+                          <!--begin::bt__tab02_table group-->
+                          <div class="right__tab04_table tab02 mb-20">
+                            <!--begin::Table-->
+                            <table
+                              class="table align-middle table-row-dashed fs-6 gy-5"
+                              id="code_list"
+                            >
+                              <!--begin::Table head-->
+                              <thead class="text-gray-400">
+                                <tr
+                                  class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0"
+                                >
+                                  <th class="min-w-25px">NO.</th>
+                                  <th class="min-w-150px">코드명</th>
+                                  
+                                  <th class="min-w-100px text-end"> 사용여부</th>
+                                  <th class="min-w-100px text-end"> 관리</th>
+                                </tr>
+                              </thead>
+                              <!--end::Table head-->
+                              <!--begin::Table body-->
+                              <!-- <tbody id="group_list" class="fw-semibold text-gray-600">
+                              </tbody> -->
+                              <!--end::Table body-->
+                            </table>
+                            <!--end::Table-->
+                          </div>
+                          <!--end::bt__tab02_table group-->
                         </div>
                         <!--end::Card body-->
                         <!--begin::Card footer-->
@@ -857,17 +889,30 @@
                         name="modal_group_name"
                       />
                       <div class = "available_content">
-                      <label class="fs-6 fw-semibold required mb-2">
-                      <span id = "tab_text3"><span> 
-                      </label>
-                      <input
-                        type="text"
-                        
-                        class="form-control form-control-solid"
-                        
-                        name="modal_availableseat"
-                        
-                      />
+                        <label class="fs-6 fw-semibold required mb-2">
+                        <span id = "tab_text3"><span> 
+                        </label>
+                        <input
+                          type="text"
+                          
+                          class="form-control form-control-solid"
+                          
+                          name="modal_availableseat"
+                          
+                        />
+                      </div>
+                      <div class = "start_seat">
+                        <label class="fs-6 fw-semibold required mb-2">
+                        <span id = "tab_text4"><span> 
+                        </label>
+                        <input
+                          type="text"
+                          
+                          class="form-control form-control-solid"
+                          
+                          name="modal_startseat"
+                          
+                        />
                       </div>
 
                     </div>
@@ -1923,6 +1968,24 @@
             }
           })
         }
+        else if (tab_info == "코드관리"){
+          
+          tableAjax = $.ajax({
+            url: "https://farm01.bitlworks.co.kr/api/v1/branches/"+branch_id+"/item-codes",
+            type: "get",
+            contentType:"application/json",
+            datatype: "JSON",
+            async: false, 
+            success: function(obj){
+              res = obj;
+            },
+            error: function(xhr, status, error){
+              console.log(`error: ${error}`)
+              console.log(`status: ${status}`)
+              return
+            }
+          })
+        }
         return res;
       }
       
@@ -2018,7 +2081,7 @@
             { targets: 0, render: idxRendering},
             { targets: 1, className: "fw-semibold text-gray-600"},
             { targets: 2, render: dateRendering, className: "fw-semibold text-gray-600" },
-            { targets: 3, render: statusRendering, className: "text-muted fw-semibold text-end" },
+            { targets: 3, render: statusRendering, className: "text-muted fw-semibold text-end " },
             { targets: 4, render: popupRendering ,className: "text-muted fw-semibold text-end" },
           ];
           
@@ -2042,15 +2105,17 @@
             { targets: 0, data: "idxx" },
             { targets: 1, data: "name" },
             { targets: 2, data: "availableSeat" },
-            { targets: 3, data: "status" },
-            { targets: 4,  data: "status"}
+            { targets: 3, data: "seatStartNumber" },
+            { targets: 4, data: "status" },
+            { targets: 5,  data: "status"}
           ];
           let tableColumnDefs = [
             { targets: 0, render: idxRendering},
             { targets: 1, className: "fw-semibold text-gray-600"},
             { targets: 2, className: "fw-semibold text-gray-600" },
-            { targets: 3, render: statusRendering, className: "text-muted fw-semibold text-end" },
-            { targets: 4, render: popupRendering ,className: "text-muted fw-semibold text-end" },
+            { targets: 3, className: "fw-semibold text-gray-600" },
+            { targets: 4, render: statusRendering, className: "text-muted fw-semibold text-end " },
+            { targets: 5, render: popupRendering ,className: "text-muted fw-semibold text-end" },
           ];
           
 
@@ -2060,6 +2125,38 @@
             dataSrc: "",
             columns : tableColum,
             columnDefs: tableColumnDefs
+          });
+        }
+        else if (tab_info == "코드관리"){
+          console.log("코드관리 data: ", data);
+          idx = 1;
+          let con = document.querySelector(".openBtn_add").setAttribute("style","visibility:visible");
+          console.log("data:",data);
+          let kk = reviseData(data);
+          newDiv = document.getElementById('code_list');
+          $(".tab_footer").addClass('hidden');
+          let tableColum = [
+            { targets: 0, data: "idxx" },
+            { targets: 1, data: "name" },
+            
+            { targets: 2, data: "status" },
+            { targets: 3,  data: "status"}
+          ];
+          let tableColumnDefs = [
+            { targets: 0, render: idxRendering},
+            { targets: 1, className: "fw-semibold text-gray-600"},
+            
+            { targets: 2, render: statusRendering, className: "text-muted fw-semibold text-end " },
+            { targets: 3, render: popupRendering ,className: "text-muted fw-semibold text-end" },
+          ];
+          
+          var table = $("#code_list").DataTable({
+            destroy: true,
+            data: kk,
+            dataSrc: "",
+            columns : tableColum,
+            columnDefs: tableColumnDefs,
+            ordering: true,
           });
         }
         //console.log("탭탭탭",tab_info_change);
@@ -2083,9 +2180,9 @@
       }
 
       function statusRendering(data, type, row){
-        if (data == "사용") return `<span class="badge badge-light-success me-2">사용</span>`;
-        if (data == "대기") return `<span class="badge badge-light-warning me-2">대기</span>`;
-        if (data == "삭제") return `<span class="badge badge-light-danger me-2">삭제</span>`;
+        if (data == "사용") return `<span class="badge badge-light-success me-2 m_status">사용</span>`;
+        if (data == "대기") return `<span class="badge badge-light-warning me-2 m_status">대기</span>`;
+        if (data == "삭제") return `<span class="badge badge-light-danger me-2 m_status">삭제</span>`;
       } 
 
       function popupRendering(data, type, row){
@@ -2114,19 +2211,28 @@
         console.log(bb);
         console.log(tab_info)
         document.getElementById("tab_text3").innerText = "좌석수";
+        document.getElementById("tab_text4").innerText = "좌석시작번호";
         document.getElementById("tab_text1").innerText = tab_info+" 관리";
         document.getElementById("tab_text2").innerHTML = tab_info+" 이름";
 
 
         if(tab_info == "학습실"){
           document.querySelector(".available_content").classList.remove("hidden");
+          document.querySelector(".start_seat").classList.remove("hidden");
         }else{
           document.querySelector(".available_content").classList.add("hidden");
+          document.querySelector(".start_seat").classList.add("hidden");
         }
+        
 
         
         document.querySelector(".modal_manage").classList.remove("hidden");
         $('input[name=modal_group_name]').attr('value',"");
+        $('input[name=modal_group_name]')[0].value=""
+        $('input[name=modal_availableseat]').attr('value',"");
+        $('input[name=modal_availableseat]')[0].value=""
+        $('input[name=modal_startseat]').attr('value',"");
+        $('input[name=modal_startseat]')[0].value=""
         $("input:radio[name ='choice_use']").attr("checked", false)
       })
       $(document).on("click", ".closeBtn", function(){
@@ -2141,11 +2247,13 @@
         let bb = document.querySelector(".modal_manage");
         console.log(bb);
         console.log(tab_info)
-        console.log("확인",$(this).parent().parent().find().prevObject[0].children[0].children[0])
+        console.log("확인",$(this).parent().parent().find().prevObject[0])
+        console.log("확인",$(this).parent().parent().find('.m_status')[0].innerText)
         let temp_id = $(this).parent().parent().find().prevObject[0].children[0].children[0].children[1].value
         let temp_name = $(this).parent().parent().find().prevObject[0].children[1].innerText
         let temp_seat = $(this).parent().parent().find().prevObject[0].children[2].innerText
-        let temp_status = $(this).parent().parent().find().prevObject[0].children[3].children[0].innerText
+        let temp_startseat = $(this).parent().parent().find().prevObject[0].children[3].innerText
+        let temp_status = $(this).parent().parent().find('.m_status')[0].innerText
         console.log("ti:",temp_id)
         console.log("ti:",temp_name)
         console.log("ti:",temp_status)
@@ -2153,23 +2261,36 @@
         console.log("id유무",document.querySelector('.content_id').id)
         
         document.getElementById("tab_text3").innerText = "좌석수";
+        document.getElementById("tab_text4").innerText = "좌석시작번호";
         document.getElementById("tab_text1").innerText = tab_info+" 수정";
         document.getElementById("tab_text2").innerHTML = tab_info+" 이름";
         if(tab_info == "학습실"){
           console.log("1")
-
+          
           $('input[name=modal_group_name]').attr('value',temp_name);
           $('input[name=modal_availableseat]').attr('value',temp_seat);
+          $('input[name=modal_startseat]').attr('value',temp_startseat);
+          $('input[name=modal_group_name]')[0].value = temp_name;
+          $('input[name=modal_availableseat]')[0].value = temp_seat;
+          $('input[name=modal_startseat]')[0].value = temp_startseat;
           $("input:radio[name ='choice_use']:input[value='"+temp_status+"']").attr("checked", true);
-          
+          console.log($('input[name=modal_group_name]').value )
           
           document.querySelector(".available_content").classList.remove("hidden");
+          document.querySelector(".start_seat").classList.remove("hidden");
         }else{
           console.log("2")
           $('input[name=modal_group_name]').attr('value',temp_name);
+          $('input[name=modal_group_name]')[0].value = temp_name;
           $("input:radio[name ='choice_use']:input[value='"+temp_status+"']").attr("checked", true);
           document.querySelector(".available_content").classList.add("hidden");
+          document.querySelector(".start_seat").classList.add("hidden");
         }
+
+        
+
+
+
         document.querySelector(".modal_manage").classList.remove("hidden");
       })
       $(document).on("click", ".closeBtn", function(){
@@ -2189,6 +2310,7 @@
         console.log(document.getElementsByName("modal_group_name")[0].value)
         
         console.log(document.getElementsByName("modal_availableseat")[0].value)
+        console.log(document.getElementsByName("modal_startseat")[0].value)
         if(document.getElementsByName("choice_use")[5].checked==true){
           cu = "삭제"
         }
@@ -2245,7 +2367,7 @@
             data_t = data_tt
           }
           
-        }else{
+        }else if(tab_info == "학습실"){
           console.log("@@@@@@@@")
           console.log("mo_su",mode, tab_info)
           console.log("@@@@@@@@")
@@ -2256,7 +2378,8 @@
               "status": cu,
               "name": document.getElementsByName("modal_group_name")[0].value,
               "branchId": branch_id,
-              "availableSeat" : document.getElementsByName("modal_availableseat")[0].value
+              "availableSeat" : document.getElementsByName("modal_availableseat")[0].value,
+              "seatStartNumber": document.getElementsByName("modal_startseat")[0].value,
             }
             data_t = data_tt
           }else{
@@ -2266,7 +2389,33 @@
               "status": cu,
               "name": document.getElementsByName("modal_group_name")[0].value,
               
-              "availableSeat" : document.getElementsByName("modal_availableseat")[0].value
+              "availableSeat" : document.getElementsByName("modal_availableseat")[0].value,
+              "seatStartNumber": document.getElementsByName("modal_startseat")[0].value,
+            }
+            data_t = data_tt
+          }
+        }else if(tab_info == "코드관리"){
+          console.log("@@@@@@@@")
+          console.log("mo_su",mode, tab_info)
+          console.log("@@@@@@@@")
+          if(mode == "add"){
+            url_var = "https://farm01.bitlworks.co.kr/api/v1/items/item-codes";
+            type_var = "POST";
+            let data_tt = {
+              "status": cu,
+              "name": document.getElementsByName("modal_group_name")[0].value,
+              "branchId": branch_id,
+              
+            }
+            data_t = data_tt
+          }else{
+            url_var = "https://farm01.bitlworks.co.kr/api/v1/items/item-codes/"+document.querySelector('.content_id').id;
+            type_var = "PUT";
+            let data_tt = {
+              "status": cu,
+              "name": document.getElementsByName("modal_group_name")[0].value,
+              
+              
             }
             data_t = data_tt
           }

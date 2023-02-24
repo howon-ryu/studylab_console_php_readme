@@ -626,12 +626,35 @@
                                   <div class="modal-body py-10 px-lg-17">
                                     <!--begin::Input group-->
                                     <div class="fv-row mb-9 enen">
-                                      <!--begin::Label-->
-                                      <label class="fs-6 fw-semibold required mb-2">학습항목</label>
-                                      <!--end::Label-->
-                                      <!--begin::Input-->
-                                      <input type="text" class="form-control form-control-solid" placeholder="" name="calendar_event_name" />
-                                      
+                                      <div class = "grid_container">
+                                        <!--begin::Label-->
+                                        <div class = "grid_item1">
+                                          <label class="fs-6 fw-semibold required mb-2">학습분류</label>
+                                          <!--end::Label-->
+                                          <!--begin::Input-->
+                                          <!-- <input type="text" class="form-control form-control-solid" placeholder="" name="calendar_event_code" /> -->
+
+                                            <select
+                                            id = "eventCode"
+                                            name="calendar_event_code"
+                                            class="form-select form-select-solid mb-4"
+                                            data-kt-select2="true"
+                                            data-placeholder="선택"
+                                            
+                                            data-allow-clear="true"
+                                            >
+                                            </select>
+                                        
+
+
+                                        </div>
+                                        <div class = "grid_item2">
+                                          <label class="fs-6 fw-semibold required mb-2">학습항목</label>
+                                          <!--end::Label-->
+                                          <!--begin::Input-->
+                                          <input type="text" class="form-control form-control-solid" placeholder="" name="calendar_event_name" />
+                                        </div>
+                                      </div>
                                       <!--end::Input-->
                                     </div>
                                     <!--end::Input group-->
@@ -800,6 +823,7 @@
                                     <div class="mb-9">
                                       <!--begin::Event name-->
                                       <div class="d-flex align-items-center mb-2">
+                                        <span class="fs-3 fw-bold me-3" data-kt-calendar="event_code"></span>
                                         <span class="fs-3 fw-bold me-3" data-kt-calendar="event_name"></span>
                                         <span class="badge badge-light-success" data-kt-calendar="all_day"></span>
                                       </div>
@@ -1304,7 +1328,7 @@
             <tr class="student_${parseInt(row) + 1}" id = ${row_data.id}>
               <td> ${parseInt(row) + 1} </td>
               <td class="n_empty"></td>
-              <td class="text-muted fw-semibold">
+              <td class="text-muted fw-semibold studentBranchId" id = ${row_data.branch.id}>
                 <div class="d-flex flex-stack">
                   <div class="d-flex align-items-center flex-row-fluid flex-wrap">
                     <div class="flex-grow-1 me-2">
@@ -1478,12 +1502,15 @@
         // let td_val = $(this).parents().find().prevObject[0].className;
         // let td_val_2 = $(this).parents().find().prevObject[0].id;
         let tr_button = $(this).find().prevObject[0];
+        let studentBranchId = $(this).find('.studentBranchId')[0].id
         // console.log("tr_val",tr_button);
         // console.log("tr_id",tr_button.className);
         $("#submit").addClass("submit");
         $("#submit").removeClass("add_submit");
         tr_button.classList.add('on');
         num = tr_button.id
+        console.log("tb!!",studentBranchId);
+        makeCodeList(studentBranchId)
         console.log("시작, 끝:",dateString2,dateString)
         setCookie('weeklyPlanId',num,1)
         listunclick(num);
@@ -1631,6 +1658,34 @@
           InFilterNewDiv.innerHTML += `<option type="button" value="${row_data.id}">${row_data.name}</option>`;
         }
       }
+      function makeCodeList(prop){
+        let res;
+        console.log("codeList",prop)
+        $.ajax({
+          url: "https://farm01.bitlworks.co.kr/api/v1/branches/"+prop+"/item-codes",
+          type: "GET",
+          contentType:"application/json",
+          async: false, 
+          datatype: "JSON",
+          success: function(obj){
+            console.log("codes",obj)
+            res = obj
+          },
+          error: function(xhr, status, error){
+            console.log("xhr: ", xhr);
+            return
+          }
+        })
+        newDiv = document.getElementById('eventCode');
+        
+        
+        newDiv.innerHTML = ``;
+        newDiv.innerHTML = `<option value=" ">기타</option>`;
+        for (row in res){
+          row_data = res[row];
+          newDiv.innerHTML += `<option type="button" value="${row_data.id}">${row_data.name}</option>`;
+        }
+      }
 
       function listunclick(value){
         //console.log("unclick_v", value);
@@ -1642,8 +1697,8 @@
             const untempbtn = document.getElementsByClassName(
               `student_` + (index+1)
             );
-            console.log("index", index);
-            console.log(untempbtn)
+            // console.log("index", index);
+            // console.log(untempbtn)
             
               untempbtn[0].classList.remove("on");
             //console.log("tempbtn", untempbtn[0].classList);
@@ -1667,7 +1722,7 @@
         e.start = e.start.substr(0,10)+"T00:00:00";
         e.end = e.start.substr(0,10)+"T23:59:59";
       }
-      console.log(e);
+      console.log("e",e);
       $.ajax({
               url: "https://farm01.bitlworks.co.kr/api/v1/items/study-plans",
               type: "post",
@@ -1680,13 +1735,14 @@
                 "description": e.description,
                 "isAllDay": e.allDay,
                 "startTime": e.start,
-                "endTime": e.end
+                "endTime": e.end,
+                "itemCodeId": e.itemCode,
               })
               ,
               datatype: "JSON",
               success: function(obj){
                 console.log("su:",obj);
-                window.location.reload();
+                //window.location.reload();
               },
               error: function(xhr, status, error){
                 console.log('xhr:', xhr);
@@ -1711,7 +1767,8 @@
                 "description": e.description,
                 "startTime": e.start,
                 "endTime": e.end,
-                "isAllDay": e.allDay
+                "isAllDay": e.allDay,
+                "itemCodeId": e.itemCode,
               })
               ,
               datatype: "JSON",
