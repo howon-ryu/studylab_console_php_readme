@@ -637,7 +637,7 @@
                               data-control="select2"
                               data-placeholder="본사를 선택해주세요"
                               class="form-select form-select-solid"
-                              onchange = "handleOnChangeBrand(this)"
+                              oninput = "handleOnChangeBrand(this)"
                             >
                             <option value="">Select a position...</option>
                             </select>
@@ -664,7 +664,7 @@
                               data-control="select2"
                               data-placeholder="지점을 선택해주세요"
                               class="form-select form-select-solid"
-                              onchange = "handleOnChangeBranch(this)"
+                              oninput = "handleOnChangeBranch(this)"
                             >
                             </select>
                               <!--end::Input-->
@@ -1690,7 +1690,7 @@
             getStudentIdNone = studentList[0].id
 
 
-// brand 와 branch리스트를 make_table()을 한 후에 하면, select 의 첫째항으로 잡힘으로 make_table()하기 전에 setting 하기
+            // brand 와 branch리스트를 make_table()을 한 후에 하면, select 의 첫째항으로 잡힘으로 make_table()하기 전에 setting 하기
 
             setting()
 
@@ -1717,7 +1717,7 @@
       
 
 
-//  사이드바 페이지별 show here active 설정
+      //  사이드바 페이지별 show here active 설정
 
 
         nav = document.getElementById('menu-student');
@@ -1733,12 +1733,12 @@
       
       
       )
-// brand 와 branch리스트를 make_table()을 한 후에 하면, select 의 첫째항으로 잡힘으로 make_table()하기 전에 setting 하기
+      // brand 와 branch리스트를 make_table()을 한 후에 하면, select 의 첫째항으로 잡힘으로 make_table()하기 전에 setting 하기
 
       function setting(){
         
         if(<?=$_SESSION['roleid']?> == 1){ // root 의 경우만 brand가 정해져 있지 않음, 전부 그냥 검색해도 됨
-          
+        // 브랜드리스트 검색
         $.ajax({
           url: "https://farm01.bitlworks.co.kr/api/v1/brands",
           type: "get",
@@ -1758,6 +1758,7 @@
             return
           }
         })
+        // 지점리스트 검색
         $.ajax({
           url: "https://farm01.bitlworks.co.kr/api/v1/branches",
           type: "get",
@@ -1775,23 +1776,23 @@
             return
           }
         })
-        $.ajax({
-          url: "https://farm01.bitlworks.co.kr/api/v1/branches/rooms",
-          type: "get",
-          contentType:"application/json",
-          // data:studentData,
-          datatype: "JSON",
-          async: false, 
-          success: function(obj){
-            console.log("ddd",obj);
-            // makeFilterRoomList(obj)
-          },
-          error: function(xhr, status, error){
-            console.log(`error: ${error}`)
-            console.log(`status: ${status}`)
-            return
-          }
-        })
+        // $.ajax({
+        //   url: "https://farm01.bitlworks.co.kr/api/v1/branches/rooms",
+        //   type: "get",
+        //   contentType:"application/json",
+        //   // data:studentData,
+        //   datatype: "JSON",
+        //   async: false, 
+        //   success: function(obj){
+        //     console.log("ddd",obj);
+        //     // makeFilterRoomList(obj)
+        //   },
+        //   error: function(xhr, status, error){
+        //     console.log(`error: ${error}`)
+        //     console.log(`status: ${status}`)
+        //     return
+        //   }
+        // })
         }else{ // root 가 아닌 경우는 brand가 정해져 있음으로 해당 브랜드를 고정한다
 
           console.log("setting_else",brandId,ownerId);
@@ -1886,27 +1887,6 @@
             </tr>`
 
           
-
-
-
-
-
-          // if(row_data.status == "사용"){
-          //   console.log("1")
-          //   document.getElementById("statusUse").style.display = "";
-          //   document.getElementById("statusWait").style.display = "none";
-          //   document.getElementById("statusStop").style.display = "none";
-          // }else if(row_data.status == "대기"){
-          //   console.log("2")
-          //   document.getElementById("statusUse").style.display = "none";
-          //   document.getElementById("statusWait").style.display = "";
-          //   document.getElementById("statusStop").style.display = "none";
-          // }else if (row_data.status == "삭제"){
-          //   console.log("3")
-          //   document.getElementById("statusUse").style.display = "none";
-          //   document.getElementById("statusWait").style.display = "none";
-          //   document.getElementById("statusStop").style.display = "";
-          // }
         }
 
         // 만약 '대기' 상태에서 클릭후  '사용' 상태로 온다면 실제쿠키에는 대기 에서 클릭한 student가 저장되어있겠지만, getStudentId 변수에는 .ready에서 정의한 변수만 있을것임으로 
@@ -1922,7 +1902,7 @@
           }
           
         }else{
-          console.log("undef!!!!!!")
+          
           document.getElementById(getStudentIdNone).click();
         }
         call();
@@ -1930,26 +1910,23 @@
 
 
 
-
+      // 학생 선택시
       $(document).on('click','#studentsList > tr',function(){
         
         let num;
-        // let td_val = $(this).parents().find().prevObject[0].className;
-        // let td_val_2 = $(this).parents().find().prevObject[0].id;
-        let tr_button = $(this).find().prevObject[0];
-        // console.log("tr_val",tr_button);
-        // console.log("tr_id",tr_button.className);
+        
+        let tr_button = $(this).find().prevObject[0]; // 선택된 학생의 id
         newDiv = document.getElementById('submit');
         newDiv.innerHTML = `변경사항 저장`;
         $("#submit").addClass("submit");
         $("#submit").removeClass("add_submit");
-        tr_button.classList.add('on');
+        tr_button.classList.add('on'); // 클릭 상태 만들기
         num = tr_button.id
-        setCookie('studentId',num,1)
-        listunclick(num);
+        setCookie('studentId',num,1) // 쿠키에 선택한 학생 id .저장
+        listunclick(num); // 선택한 학생을 제외한 나머지 학생 클릭 제거
         studentId = num;
         console.log("select student id:",studentId);
-
+        // 보드 만들기
         $.ajax({
           url: "https://farm01.bitlworks.co.kr/api/v1/users/"+studentId,
           type: "get",
@@ -1967,8 +1944,8 @@
               branchId : specStudentInfo.branch.id,
               roomId : specStudentInfo.room.id,
             }
-            makeBoardManager(forManager);
-            make_board(specStudentInfo);
+            makeBoardManager(forManager); // 학습실, 관리그룹, 좌석번호 리스트 미리 만들어주기
+            make_board(specStudentInfo); // 보드 만들기
 
           },
           error: function(xhr, status, error){
@@ -1979,42 +1956,32 @@
         })
 
       })
-
+      // 클릭한 학생 제외 나머지 클릭 제거
       function listunclick(value){
-        //console.log("unclick_v", value);
-        // console.log("unclick", brandList);
+        
         studentList.forEach((currentElement, index, array) => {
-          //console.log("currentElement", currentElement);
-          //console.log("value", value);
+          
           if (currentElement.id != value) {
             const untempbtn = document.getElementsByClassName(
               `student_` + (index+1)
             );
-            //console.log(untempbtn)
+            
             untempbtn[0].classList.remove("on");
-            //console.log("tempbtn", untempbtn[0].classList);
+            
           }
-          //console.log("array", array);
-
-
-          // if(index+1 != value){
-          //   //console.log(index+1)
-          //     // const untempbtn = document.getElementsByClassName(`brand_` + index+1);
-          //     const untempbtn = document.getElementsByClassName(`brand_`+(index+1));
-          //     //console.log("un",untempbtn[0]);
-          //   untempbtn[0].classList.remove("on");
-          // }
+          
         });
       }
+      // 보드 만들어 주기
       function make_board(data){
         // console.log(data.brand.id);
         console.log("make_board_data",data)
         let address = data.address.split('//')
         
-        // $('#brand').val(data.brand.id).prop("selected",true);
+        
         $('#address').val(address[0])
         $('#detailAddress').val(address[1])
-        // $('#address').val(data.address)
+        
         $('#brand').val(data.brand.id).prop("selected",true);
         $("#select2-brand-container").text(data.brand.name);
 
@@ -2027,36 +1994,34 @@
         $('#school').val(data.school)
         $('#grade').val(data.grade).prop("selected",true);
         $("#select2-grade-container").text(data.grade);
-        // $('#branchName').val(data.branch.name)
-        // $('#brandName').val(data.brand.name)
+        
         $('#realName').val(data.realName)
         $('#password').val(data.password)
         $('#passwordC').val(data.password)
-        console.log("sss data:",data.room)
+        
         if(data.room==null){
-          console.log("ss")
+          
           $("#select2-room-container").text("학습실 선택");
         }else{
           $('#room').val(data.room.id).prop("selected",true);
         $("#select2-room-container").text(data.room.name);
         }
         if(data.group==null){
-          console.log("no group")
+          
           $("#select2-group-container").text("관리 그룹 선택");
         }else{
           $('#group').val(data.group.id).prop("selected",true);
         $("#select2-group-container").text(data.group.name);
         }
         
-        //$('#seatNumber').val(data.seatNumber)
+        
         $('#phone').val(data.phone)
         $('#email').val(data.email)
         $('#userName').val(data.username)
 
         $('#brand').prop('disabled',true);
         $('#branch').prop('disabled',true);
-        // $('#seatNumber').prop('disabled',true);
-        //$('#room').prop('disabled',true);
+        
         
         if(data.status =="사용"){
           $('#status_active').val(data.status).prop("checked",true)
@@ -2070,7 +2035,7 @@
         
       }
 
-
+      // 필터
       function filterClick(){
         console.log("필터 클릭");
         var fiterBrandId = ""
@@ -2125,9 +2090,10 @@
             "status":cu
         }
         console.log("dt",data_t)
+        // 브랜드가 정해져있는 경우 filterbrandid, filterbranchid 가 아닌 session 값으로 검색함
         if((<?=$_SESSION['roleid']?> == 3 || <?=$_SESSION['roleid']?> == 4 )&&fiterBranchId==""){
           tempBranchList.forEach((bi)=>{
-            console.log("bi!!",bi);
+            
             let data_g ={
               "brandId": brandId,
               "branchId": bi,
@@ -2188,7 +2154,7 @@
        
       }
 
-
+      // 필터에서 리셋을 클릭하였을때
       function resetClick(){
         console.log("reset 클릭");
 
@@ -2212,12 +2178,14 @@
        // document.getElementsByClassName("select2-selection__clear")[3].classList.add("hidden")
         document.getElementsByName("InFilterStatus")[0].value = ""
 
+        // 존재하는 모든 form을 돌면서, 'x' 표시가 있는 경우 hidden 처리
+
         for (i = 0; i<document.getElementsByClassName("select2-selection__clear").length;i++){
          document.getElementsByClassName("select2-selection__clear")[i].classList.add("hidden")
         }
         
         console.log(document.getElementsByName("InFilterStatus"))
-        
+        // form 안의 글자를 바꾸어줌
         $(".select2-selection__rendered").text("상태 선택");
         $("#select2-InFilterBrand-container").text("본사 선택");
         $("#select2-InFilterBranch-container").text("지점 선택");
@@ -2234,13 +2202,11 @@
       }
       
 
-
+      //brand 리스트 만들기
       function makeFilterBrandList(data){
         newDiv = document.getElementById('brand');
         InFilterNewDiv = document.getElementById('InFilterBrand');
-        console.log("data",data)
-        console.log("InFilterNewDiv",InFilterNewDiv)
-        console.log("newDiv",newDiv);
+        
         newDiv.innerHTML = ``;
         for (row in data){
           row_data = data[row];
@@ -2254,6 +2220,7 @@
         }
         
       }
+      // 브랜드가 정해져있는 경우 브랜드 하나 select 만들기
       function makeFilterBrandOne(data){
         newDiv = document.getElementById('brand');
         InFilterNewDiv = document.getElementById('InFilterBrand');
@@ -2264,6 +2231,7 @@
         InFilterNewDiv.innerHTML = `<option value="">본사를 선택해주세요</option>`;
         InFilterNewDiv.innerHTML += `<option value="${data.id}">${data.name}</option>`
       }
+      // 브랜치 리스트 만들기
       function makeFilterBranchList(data){
         newDiv = document.getElementById('branch');
         newDiv.innerHTML = ``;
@@ -2272,6 +2240,7 @@
           newDiv.innerHTML += `<option value="${row_data.id}">${row_data.name}</option>`
         }
       }
+      // 브랜치가 정해져 있는 경우 브랜치 하나 select 만들기
       function makeFilterBranchOne(data){
         newDiv = document.getElementById('branch');
         newDiv.innerHTML = ``;
@@ -2279,6 +2248,8 @@
         newDiv.innerHTML += `<option value="${data.id}">${data.name}</option>`
         
       }
+
+      // 학습실 리스트 만들기
       function makeFilterRoomList(data){
         newDiv = document.getElementById('room');
         newDiv.innerHTML = ``;
@@ -2289,38 +2260,46 @@
           newDiv.innerHTML += `<option value="${row_data.id}">${row_data.name}</option>`
         }
       }
+      // 학습실이 정해져 있는 경우 학습실 하나 select만들기
       function makeFilterRoomOne(data){
         newDiv = document.getElementById('room');
         newDiv.innerHTML = ``;
         newDiv.innerHTML += `<option value="${data.id}">${data.name}</option>`
         
       }
+      // select 박스에서 브랜드가 변하면 
       function handleOnChangeBrand(prop){
         console.log("brandchange",prop.value);
         
         $('#branch').prop('disabled',false);
         $('#InFilterBranch').prop('disabled',false);
         
-        makeBranchList(prop.value);
+        makeBranchList(prop.value); // 브랜드 리스트 만들기
+        $('#branch').val(""); // 리스트를 만들고 value를 없애줌으로써 첫째항이 올라오는것을 방지
       }
+      // select 박스에서 브랜치가 변하면 
       function handleOnChangeBranch(prop){
         console.log("branchchange",prop.value);
         $('#room').prop('disabled',false);
+        $('#group').prop('disabled',false);
         $('#InFilterRoom').prop('disabled',false);
         $('#InFilterGroup').prop('disabled',false);
-        makeRoomList(prop.value);
-        
-        makeGroupList(prop.value);
+        makeRoomList(prop.value);// 학습실 리스트 만들기
+        $('#room').val("");// 리스트를 만들고 value를 없애줌으로써 첫째항이 올라오는것을 방지
+        makeGroupList(prop.value);// 그룹 리스트 만들기
+        $('#group').val("");// 리스트를 만들고 value를 없애줌으로써 첫째항이 올라오는것을 방지
       }
+      //select 박스에서 학습실이 변하면 
       function handleOnChangeRoom(prop){
         console.log("roomchange",prop.value);
         // $('#seatNumber').prop('disabled',false);
-        
-        makeSeatList(prop.value);
-        
+        $('#seatNumber').prop('disabled',false);
+        makeSeatList(prop.value); // 좌석번호 리스트 만들기
+        //$('#seatNumber').val("");
         $('#seatNumber').val(specStudentInfo.seatNumber).prop("selected",true);
         
       }
+      // 지점 리스트 만들기
       function makeBranchList(prop){
         let res;
         const data_t ={
@@ -2361,9 +2340,10 @@
           InFilterNewDiv.innerHTML += `<option type="button" value="${row_data.id}">${row_data.name}</option>`;
         }
       }
+      // 학습실 리스트 만들기
       function makeRoomList(prop){
         let res;
-        console.log("%%%%%%%%%");
+        
         $.ajax({
           url: "https://farm01.bitlworks.co.kr/api/v1/branches/"+prop+"/rooms",
           type: "GET",
@@ -2394,6 +2374,7 @@
           InFilterNewDiv.innerHTML += `<option type="button" value="${row_data.id}">${row_data.name}</option>`;
         }
       }
+      // 관리그룹 리스트 만들기
       function makeGroupList(prop){
         let res;
         $.ajax({
@@ -2427,6 +2408,7 @@
           InFilterNewDiv.innerHTML += `<option type="button" value="${row_data.id}">${row_data.name}</option>`;
         }
       }
+      // 좌석 번호 리스트 구하기
       function makeSeatList(prop){
         
         console.log("makeSeatList");
@@ -2469,6 +2451,7 @@
         }
         
       }
+      // 학습실, 관리그룹, 좌석번호 리스트 미리 만들어주기
       function makeBoardManager(data){
         $.ajax({
           url: "https://farm01.bitlworks.co.kr/api/v1/branches/"+data.branchId+"/rooms",
@@ -2538,7 +2521,7 @@
           newDiv.innerHTML += `<option value="${row_data.id}">${row_data.name}</option>`
         }
 
-        console.log("!!!!",data);
+        
         // 좌석번호 리스트 만들기
         $.ajax({
           url: "https://farm01.bitlworks.co.kr/api/v1/branches/rooms/"+data.roomId+"/seats",
@@ -2561,9 +2544,7 @@
         newDiv = document.getElementById('seatNumber');
         newDiv.innerHTML = ``;
         
-        // ress.forEach((currentValue, index, arr) => {
-        //   console.log('Index: ' + index + ' Value: ' + currentValue+'arr'+arr);
-        // });
+        
         for (row in ress){
           row_data = ress[row];
           // console.log(row,row_data)
@@ -2599,21 +2580,26 @@
       $(document).on('click', '#add_student', function(){
         listunclick(-1);
         $('#brand').prop('disabled',false);
-        // $('#branch').prop('disabled',false);
-        // $('#room').prop('disabled',false);
+        $('#seatNumber').prop('disabled',true);
+        $('#room').prop('disabled',true);
+        $('#group').prop('disabled',true);
+        $('#brand').val("");
+        
+        
         
         newDiv = document.getElementById('submit');
         newDiv.innerHTML = `추가`;
 
         $("#submit").addClass("add_submit");
         $("#submit").removeClass("submit");
-
+        // select 박스 텍스트 설정
         $("#select2-brand-container").text("본사를 선택해주세요");
         $("#select2-branch-container").text("지점을 선택해주세요");
         $("#select2-room-container").text("학습실을 선택해주세요");
         $("#select2-group-container").text("학습실을 선택해주세요");
         $("#select2-grade-container").text("학년을 선택해주세요");
-
+        $("#select2-seatNumber-container").text("좌석번호를 선택해주세요");
+        // default value 들 다 공백으로 만들어주기
         $('#phone').val("");
         $('#passwordC').val("");
         $('#email').val("");
@@ -2627,25 +2613,23 @@
         $('#detailAddress').val("");        
         $('#seatNumber').val("");        
         $('#realName').val("");        
-        $('#userName').val("");        
+        $('#userName').val(""); 
+        $('#seatNumber').val("");    
+        
              
       })
 
-
+      // 학생 추가
       function add_student(){
         let cu = "사용"
-        // alert(document.getElementById('brand'))
-        // alert(document.getElementById('branch'))
+        
         console.log(document.getElementById('brand').value)
         let allAddress = document.getElementsByName("address")[0].value +" //"+ document.getElementsByName("detailAddress")[0].value
         let tempRoom = $('#room').val();
         let tempGroup = $('#group').val();
         let tempGrade = $('#grade').val();
-        console.log(tempGrade);
-        console.log(tempRoom);
-        console.log("사용?",document.getElementsByName("choice_use")[0].checked);
-        console.log("대기?",document.getElementsByName("choice_use")[1].checked);
-        console.log("삭제?",document.getElementsByName("choice_use")[2].checked);
+        
+        
         if(document.getElementsByName("choice_use")[2].checked==true){
           cu = "삭제"
         }
@@ -2697,18 +2681,15 @@
         })
 
       }
-
+      // 학생 변경사항 저장
       function submit_data(){
         let cu = "사용"
         let tempRoom = $('#room').val();
         let tempGroup = $('#group').val();
         let tempGrade = $('#grade').val();
         let allAddress = document.getElementsByName("address")[0].value +" //"+ document.getElementsByName("detailAddress")[0].value
-        console.log(tempGrade);
-        console.log(tempRoom);
-        console.log("사용?",document.getElementsByName("choice_use")[0].checked);
-        console.log("대기?",document.getElementsByName("choice_use")[1].checked);
-        console.log("삭제?",document.getElementsByName("choice_use")[2].checked);
+        
+        
         if(document.getElementsByName("choice_use")[2].checked==true){
           cu = "삭제"
         }

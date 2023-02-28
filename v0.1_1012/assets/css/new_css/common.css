@@ -270,6 +270,13 @@
 
 }
 
+
+
+.fv-plugins-bootstrap5-row-invalid div:nth-child(3) {
+  display: none;
+
+}
+
 .select2-container--open .select2-dropdown {
   z-index: 1060;
 }

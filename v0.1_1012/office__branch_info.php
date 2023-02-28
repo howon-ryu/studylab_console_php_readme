@@ -455,7 +455,7 @@
                                 <div class="fs-4 fw-bold pb-3 border-3 border-primary cursor-pointer right__tab_btn right__tab01_btn on" data-kt-table-widget-3="tab" data-kt-table-widget-3-value="Show All">상세정보</div>
                                 <div class="fs-4 fw-bold text-muted pb-3 cursor-pointer right__tab_btn right__tab02_btn" data-kt-table-widget-3="tab" data-kt-table-widget-3-value="Pending">관리그룹</div>
                                 <div class="fs-4 fw-bold text-muted pb-3 cursor-pointer right__tab_btn right__tab03_btn" data-kt-table-widget-3="tab" data-kt-table-widget-3-value="Pending">학습실</div>
-                                <div class="fs-4 fw-bold text-muted pb-3 cursor-pointer right__tab_btn right__tab04_btn" data-kt-table-widget-3="tab" data-kt-table-widget-3-value="Pending">코드관리</div>
+                                <div class="fs-4 fw-bold text-muted pb-3 cursor-pointer right__tab_btn right__tab04_btn" data-kt-table-widget-3="tab" data-kt-table-widget-3-value="Pending">학습분류코드</div>
                               
                               
                               <!-- <div class="fs-4 fw-bold text-muted pb-3 cursor-pointer right__tab_btn right__tab04_btn" data-kt-table-widget-3="tab" data-kt-table-widget-3-value="Pending">알림톡 설정</div> -->
@@ -1968,7 +1968,7 @@
             }
           })
         }
-        else if (tab_info == "코드관리"){
+        else if (tab_info == "학습분류코드"){
           
           tableAjax = $.ajax({
             url: "https://farm01.bitlworks.co.kr/api/v1/branches/"+branch_id+"/item-codes",
@@ -2127,8 +2127,8 @@
             columnDefs: tableColumnDefs
           });
         }
-        else if (tab_info == "코드관리"){
-          console.log("코드관리 data: ", data);
+        else if (tab_info == "학습분류코드"){
+          console.log("학습분류코드 data: ", data);
           idx = 1;
           let con = document.querySelector(".openBtn_add").setAttribute("style","visibility:visible");
           console.log("data:",data);
@@ -2394,7 +2394,7 @@
             }
             data_t = data_tt
           }
-        }else if(tab_info == "코드관리"){
+        }else if(tab_info == "학습분류코드"){
           console.log("@@@@@@@@")
           console.log("mo_su",mode, tab_info)
           console.log("@@@@@@@@")

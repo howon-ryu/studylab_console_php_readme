@@ -225,7 +225,7 @@ var KTAppCalendar = function() {
                 bootstrap: new FormValidation.plugins.Bootstrap5({
                     rowSelector: '.fv-row',
                     eleInvalidClass: '',
-                    eleValidClass: ''
+                    eleValidClass: 'abc'
                 })
             }
         });
@@ -359,8 +359,37 @@ var KTAppCalendar = function() {
                             end: endDatepicker.value+"T"+endTimepicker.value,
                             allDay: data.allDay,
                         };
-                        
-                        addplan(addNewEventData);
+
+                        if(startTimepicker.value>=endTimepicker.value){
+                           
+                            Swal.fire({
+                                text:  "종료시간보다 시작시간이 빠를 수 없습니다. 시간을 다시 설정하세요",           
+                                icon:  "error",                  
+                                buttonsStyling: false,
+                                confirmButtonText:  "확인",           
+                                customClass: {
+                                    confirmButton:  "btn btn-primary"                  
+                                }
+                            });
+                            submitButton.disabled = false;
+                            submitButton.setAttribute('data-kt-indicator', false);
+                        }else{
+                            // modifyplan(editEventData);
+                            //   // Show popup confirmation                  
+                            // Swal.fire({
+                            //     text:  "항목이 수정되었습니다!",       
+                            //     icon:  "success",                
+                            //     buttonsStyling: false,
+                            //     confirmButtonText:  "확인",      
+                            //     customClass: {
+                            //         confirmButton:  "btn btn-primary"            
+                            //     }
+                            // }).then(function(result) {
+                            //     if (result.isConfirmed) {                                
+                            //         modal.hide();
+                            //     }
+                            // }); //form.submit(); 
+                            addplan(addNewEventData);
                         // Show popup confirmation                
                         Swal.fire({
                             text: "새로운 항목이 추가되었습니다!",
@@ -376,6 +405,9 @@ var KTAppCalendar = function() {
                                 return;
                             }   
                         }); 
+                        }
+                        
+                        
                         //form.submit(); 
                         // Submit form                  
                     }, 2000);
@@ -429,6 +461,7 @@ var KTAppCalendar = function() {
         console.log("modal",modal)   
         modal.show();
         // Select datepicker wrapper elements   
+        
         const datepickerWrappers = form.querySelectorAll('[data-kt-calendar=\"datepicker\"]');
         // Handle all day toggle      
         const allDayToggle = form.querySelector('#kt_calendar_datepicker_allday');
@@ -445,7 +478,10 @@ var KTAppCalendar = function() {
             }
         });
         console.log("editdata", data);
+        console.log("cpodedata", data.eventCode.id);
         populateForm(data);
+        $('#eventCode').val(data.eventCode.id).prop("selected",true);
+        $('#select2-eventCode-container').text(data.eventCode.name);
         // Handle submit form     
         submitButton.removeEventListener('click', editEvent);
         submitButton.removeEventListener('click', addnewevent);

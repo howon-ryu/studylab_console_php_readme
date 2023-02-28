@@ -784,6 +784,7 @@
                                   >본사 로고 이미지 (권장 사이즈 120px*30px)</label
                                 ><br/>
                                 <input class="input_file" type="file" id="logo_img" name="logo_img" />
+                                
                                 <!--end::Label-->
                                 <!--begin::Input-->
                                 

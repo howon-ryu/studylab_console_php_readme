@@ -1206,14 +1206,15 @@
 
       let branchList;
       let branchId = 0;
+      // 날짜 구하기
       var today = new Date();
       let idx;
       var year = today.getFullYear();
       var month = ('0' + (today.getMonth() + 1)).slice(-2);
       var day = ('0' + today.getDate()).slice(-2);
 
-      var dateString = year + '-' + month  + '-' + day;
-      console.log("to",dateString);
+      var dateString = year + '-' + month  + '-' + day; // 연월일 세팅
+      
       var brandId = ""
       
       var ownerId = ""
@@ -1235,11 +1236,11 @@
       }else{
         managerId = ""
       }
-      getDayPlanIdNone = 1
+      getDayPlanIdNone = 1 
       $(document).ready(function(){
 
-        console.log("쿠키",getCookie('dayPlanId'));
-        getDayPlanId = getCookie('dayPlanId')
+        
+        getDayPlanId = getCookie('dayPlanId') // 클릭했던 branch 가져오기
         const data_t ={
             "brandId": brandId,
             "ownerId": ownerId,
@@ -1348,56 +1349,15 @@
         newDiv.innerHTML = ``;
         for (row in data){
           row_data = data[row];
-
-        //   newDiv.innerHTML += `
-        //     <tr class="student_${parseInt(row) + 1}" id = ${row_data.id}>
-        //       <td> ${parseInt(row) + 1} </td>
-        //       <td class="n_empty"></td>
-        //       <td class="text-muted fw-semibold">
-        //         <div class="d-flex flex-stack">
-        //           <div class="d-flex align-items-center flex-row-fluid flex-wrap">
-        //             <div class="flex-grow-1 me-2">
-        //               <a
-        //                 href="/metronic8/demo1/../demo1/pages/user-profile/overview.html"
-        //                 class="text-gray-800 text-hover-primary fs-6 fw-bold"
-        //                 >${row_data.branch.name}</a
-        //               >
-                      
-        //             </div>
-        //           </div>
-        //         </div>
-        //       </td>
-        //       <td>
-        //                                 <!--begin::Section-->
-        //                                 <div
-        //                                 class="d-flex align-items-center flex-row-fluid flex-wrap"
-        //                               >
-        //                                 <!--begin:Author-->
-        //                                 <div class="flex-grow-1 me-2">
-        //                                   <a
-        //                                     href="/metronic8/demo1/../demo1/pages/user-profile/overview.html"
-        //                                     class="text-gray-800 text-hover-primary fs-6 fw-bold"
-        //                                     >${row_data.realName}</a
-        //                                   >
-        //                                   <span
-        //                                     class="text-muted fw-semibold d-block fs-7"
-        //                                     >${row_data.school} <span>${row_data.grade}</span></span
-        //                                   >
-        //                                 </div>
-        //                                 <!--end:Author-->
-        //                               </div>
-        //                               <!--end::Section-->
-        //                               </td>
-              
-        //       <td class="text-end" id ="statusUse" >
-        //         <span class="badge badge-light-success fw-bold px-4 py-3">${row_data.status}</span>
-        //       </td>
-              
-        //     </tr>`
-
-          if(row_data.status == "사용"){
-            newDiv.innerHTML += `
-            <tr class="student_${parseInt(row) + 1}" id = ${row_data.id}>
+          if (row_data.status == "사용"){
+            status_color = "success";
+          } else if (row_data.status == "대기"){
+            status_color = "warning";
+          } else{
+            status_color = "danger";
+          }
+          newDiv.innerHTML += `
+          <tr class="student_${parseInt(row) + 1}" id = ${row_data.id}>
               <td> ${parseInt(row) + 1} </td>
               <td class="n_empty"></td>
               <td class="text-muted fw-semibold">
@@ -1417,63 +1377,13 @@
               
               
               <td class="text-end" id ="statusUse" >
-                <span class="badge badge-light-success fw-bold px-4 py-3">${row_data.status}</span>
+                <span class="badge badge-light-${status_color} fw-bold px-4 py-3">${row_data.status}</span>
               </td>
               
             </tr>`
-          }else if(row_data.status == "대기"){
-            newDiv.innerHTML += `
-            <tr class="student_${parseInt(row) + 1}" id = ${row_data.id}>
-              <td> ${parseInt(row) + 1} </td>
-              <td class="n_empty"></td>
-              <td class="text-muted fw-semibold">
-                <div class="d-flex flex-stack">
-                  <div class="d-flex align-items-center flex-row-fluid flex-wrap">
-                    <div class="flex-grow-1 me-2">
-                      <a
-                        
-                        class="text-gray-800 text-hover-primary fs-6 fw-bold"
-                        >${row_data.name}</a
-                      >
-                      
-                    </div>
-                  </div>
-                </div>
-              </td>
-             
-              
-              <td class="text-end" id ="statusWait" >
-                <span class="badge badge-light-warning fw-bold px-4 py-3">${row_data.status}</span>
-              </td>
-              
-            </tr>`
-          }else{
-            newDiv.innerHTML += `
-            <tr class="student_${parseInt(row) + 1}" id = ${row_data.id}>
-              <td> ${parseInt(row) + 1} </td>
-              <td class="n_empty"></td>
-              <td class="text-muted fw-semibold">
-                <div class="d-flex flex-stack">
-                  <div class="d-flex align-items-center flex-row-fluid flex-wrap">
-                    <div class="flex-grow-1 me-2">
-                      <a
-                        
-                        class="text-gray-800 text-hover-primary fs-6 fw-bold"
-                        >${row_data.name}</a
-                      >
-                      
-                    </div>
-                  </div>
-                </div>
-              </td>
-              
-              
-              <td class="text-end" id ="statusStop" >
-                <span class="badge badge-light-danger fw-bold px-4 py-3">${row_data.status}</span>
-              </td>
-              
-            </tr>`
-          }
+      
+
+          
           
 
 
@@ -1592,11 +1502,7 @@
         $("#select2-InFilterOwner-container").text("원장 선택");
         
         $('#InFilterOwner').prop('disabled',true);
-        
 
-        
-        
-        
        
       }
       

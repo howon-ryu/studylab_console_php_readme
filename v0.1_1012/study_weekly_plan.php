@@ -1742,7 +1742,7 @@
               datatype: "JSON",
               success: function(obj){
                 console.log("su:",obj);
-                //window.location.reload();
+                window.location.reload();
               },
               error: function(xhr, status, error){
                 console.log('xhr:', xhr);
