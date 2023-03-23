@@ -163,7 +163,7 @@
                     <h1
                       class="page-heading d-flex text-dark fw-bold fs-2 flex-column justify-content-center my-0"
                     >
-                      학생학습이력
+                      학생학습이력ㅇ
                     </h1>
                     <!--end::Title-->
                     <!--begin::Breadcrumb-->
@@ -1367,7 +1367,7 @@
             "toDate" : dateString,
         }
         $.ajax({
-          url: "https://farm01.bitlworks.co.kr/api/v1/users/students/"+studentId+"/daily-reports",
+          url: "https://farm01.bitlworks.co.kr/api/v1/users/students/"+studentId+"/stat/daily-reports",
           type: "get",
           contentType:"application/json",
           data:WeeklyProgressesData,
