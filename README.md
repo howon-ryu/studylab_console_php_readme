@@ -1,6 +1,6 @@
 
 
-# 🖊️[studylab_student_php](https://student.here.study/student/)  스터디카페 학생 페이지  🖊️
+# 🖊️[studylab_console_php](https://student.here.study:10443/console/)  스터디카페 관리자 페이지  🖊️
   
 
   
