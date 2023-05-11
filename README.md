@@ -6,26 +6,56 @@
   
 ![version](https://img.shields.io/badge/version-0.4.0-blue.svg) 
 
-![Image](https://user-images.githubusercontent.com/75923078/226610348-a62f98af-7913-4ea1-aa09-ad87c726dccd.png)
+![Image](https://github.com/howon-ryu/studylab_student_php_readme/assets/75923078/ffb4cdbe-64e0-4a7e-9e46-0599daac3bf1)
 
-studylab student 는 php 와 html/js/css를 기반으로 하는 스터티카페 학생 학습 페이지입니다.  
-studylab 에 소속된 학생들은   
-자신의 계정으로 로그인하여 자신이 공부할 일정을 등록/수정/삭제가 가능합니다.  
-등록된 일정은 타이머를 통해서 공부시간을 체크하고 저장합니다.  
-완료한 학습은 각각에 대한 평점을 기록합니다.  
-일/주/월 로 누적된 학습 시간을 amchart의 다양한 통계 그래프를 이용하여 시각적으로 볼 수 있습니다.  
+studylab console 는 php 와 html/js/css를 기반으로 하는 스터티카페 관리자 페이지입니다.  
+계층형 관리자 구조로 되어있으며 학생들을 관리하는 관리자(head,owner,manager)와 브랜드를 만들고 학생들의 일정을 관리할수 있는 studylab 백오피스 입니다.
 
-## ✈주요기능
+[학원관리] - 본사/원장/메니저/지점 관리
 
-**▷일정(edit or 계획)**  
+학원 브랜드를 생성하고 상위 관리자가 하위관리자를 만들며 역할을 할당합니다.
+이름, 로그인 id, 비밀번호, 전화 번호 등을 기본으로 가지며 role 에 따라서 권한이 제한됩니다.
+
+[학생관리] - 학생정보
+
+학생을 생성하며(studylab student) id, pw, 이름, 전화번호 등을 입력받고 group과 학습실, 좌석 번호등의 정보를 입력합니다.
+
+[학습관리] - 지점학습현황/학생학습계획/학생학습이력
+
+지점별 학생 학습 정보, 학생의 학습 계획/이력/레포트 를 관리합니다.
+
+
+
+## ✈주요 상세 기능
+
+**▷학원관리 - 본사/원장/매니저/지점 관리**  
   
-<img src="https://user-images.githubusercontent.com/75923078/226615816-1bdf9a37-81f9-4519-96df-6499f2e680cc.png" width="300" height="200" />   
   
-fullcalendar를 바탕으로 합니다  
-해당 일자에 시간을 클릭하면 일정을 등록할 수 있습니다.  
-등록 팝업에서 타이틀과 분류코드 세부 시간을 설정 할 수 있습니다.  
-등록된 일정을 클릭하면 수정과 삭제를 할 수 있습니다.  
-수정에서는 타이틀, 분류코드, 시간을 변경 할 수 있습니다.
+[본사관리]  
+
+<img src="https://github.com/howon-ryu/studylab_student_php_readme/assets/75923078/df1055e3-2abf-4768-b0ec-ddccca50464a" width="300" height="200" />   
+  
+본사(brand)와 본사관리자(head)를 생성하고 변경사항을 관리합니다.
+
+
+[원장관리]
+
+<img src="https://github.com/howon-ryu/studylab_student_php_readme/assets/75923078/4256ecad-8d74-4436-b933-61b0d656c7bd" width="300" height="200" />   
+
+원장(owner)를생성하고 관리합니다.
+원장은 반드시 한개의 본사에 소속되어있어야 하며 해당 브랜드의 head가 변경 권한을 갖습니다.
+
+
+[매니저관리]
+
+<img src="https://github.com/howon-ryu/studylab_student_php_readme/assets/75923078/ded729e2-9a53-42c3-8fdd-938f65295bc2" width="300" height="200" />   
+
+매니저(manager)를생성하고 관리합니다.
+매니저는 반드시 한개의 본사에 소속되어있으며 원장을 target으로 소속되어있습니다.
+원장, head가 변경 권한을 갖습니다.
+
+
+
 
 <br>
 
