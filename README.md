@@ -146,9 +146,9 @@ studylab student에서 학생이 설정한 계획을 확인하고 변경 및 추
 - [Fullcalendar](https://fullcalendar.io/) - 일정 계획 및 레포트 보기 달력
 - [NHN_TOAST_SMS](https://docs.nhncloud.com/ko/Notification/SMS/ko/Overview/) - 레포트 sms 전송
 - [AmCharts](https://www.amcharts.com/) - 레포트 가시화
-- [Fullcalendar](https://fullcalendar.io/) - 일정 계획 및 레포트 보기 달력
-- [NHN_TOAST_SMS](https://docs.nhncloud.com/ko/Notification/SMS/ko/Overview/) - 레포트 sms 전송
-- [AmCharts](https://www.amcharts.com/) - 레포트 가시화
+- [Slick](https://kenwheeler.github.io/slick/) - 리더보드 슬라이드
+- [DataTable](https://datatables.net/) - 학생 및 보드 정보 테이블
+- [HighCharts](https://www.highcharts.com/) - 레포트 가시화
 
   
     <br>
