@@ -149,6 +149,7 @@ studylab student에서 학생이 설정한 계획을 확인하고 변경 및 추
 - [Slick](https://kenwheeler.github.io/slick/) - 리더보드 슬라이드
 - [DataTable](https://datatables.net/) - 학생 및 보드 정보 테이블
 - [HighCharts](https://www.highcharts.com/) - 레포트 가시화
+- [Info](https://developers.kakao.com/docs/latest/ko/local/dev-guide) - 학원/학생 주소 
 
   
     <br>
