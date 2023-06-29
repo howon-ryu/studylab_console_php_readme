@@ -56,7 +56,7 @@ studylab console 는 php 와 html/js/css를 기반으로 하는 스터티카페 
 
 [지점관리]
 
-<img src="https://github.com/howon-ryu/studylab_console_php/assets/75923078/fd7fc913-502d-41ed-9b69-98aa1b18b3ac" width="300" height="200" />   
+<img src="https://github.com/howon-ryu/STUDYLAB/assets/75923078/ca03daba-a6b4-461d-886f-6824c324184c" width="300" height="200" />   
 
 지점을 생성하고 관리합니다.
 지점은 본사안에 있는 학원관이며, 관리그룹, 학습코드, 학습실을 만들고 관리합니다.
@@ -68,7 +68,7 @@ studylab console 는 php 와 html/js/css를 기반으로 하는 스터티카페 
 
 **▷학생관리 - 학생정보**
   
-<img src="https://github.com/howon-ryu/studylab_console_php/assets/75923078/4461309a-7f8d-471d-95d8-b69b86780603" width="200" height="200" />   
+<img src="https://github.com/howon-ryu/STUDYLAB/assets/75923078/70432e2a-bf1e-4c63-8724-16072ff129cb" width="200" height="200" />   
   
 학생을 생성하고 관리합니다.
 studylab timer 에 로그인할 id/pw와 학생정보를 입력합니다.
@@ -82,7 +82,7 @@ studylab timer 에 로그인할 id/pw와 학생정보를 입력합니다.
  
 [지점학습현황]
 
-<img src="https://github.com/howon-ryu/studylab_console_php/assets/75923078/36799449-ac98-4758-8d03-cd159e2f538d" width="300" height="200" />   
+<img src="https://github.com/howon-ryu/STUDYLAB/assets/75923078/d0a17802-0778-47d3-a610-08e4d78c71c5" width="300" height="200" />   
   
 
 지점별 학생들의 학습 현황을 확인합니다.
@@ -90,7 +90,8 @@ studylab timer 에 로그인할 id/pw와 학생정보를 입력합니다.
 실제 학습실의 맨 앞에 스크린에서 보여줄 리더보드를 열수 있습니다.
 
 
-<img src="https://github.com/howon-ryu/studylab_console_php/assets/75923078/49066a3f-fd7b-45e5-ad59-ff3098d5001a" width="300" height="200" />   
+<img src="https://github.com/howon-ryu/STUDYLAB/assets/75923078/32d4d60c-682c-46a6-be38-b6f395458c44" width="300" height="200" />   
+<img src="https://github.com/howon-ryu/STUDYLAB/assets/75923078/c3e79456-a9e3-49b0-afad-acce74b6c155" width="300" height="200" />   
 
 slick.js를 이용하여 만들었으며 정해진 시간에 따라서 오른쪽으로 slide 합니다.
 학습실의 좌석배치도와 학습인원수에 따라서 좌석 배열을 변경 할 수 있고, 현재 학습시간과 출석, 순공 비율을 한눈에 확인할 수 있습니다.
@@ -99,7 +100,7 @@ slick.js를 이용하여 만들었으며 정해진 시간에 따라서 오른쪽
 
 [학생학습계획]
 
-<img src="https://github.com/howon-ryu/studylab_console_php/assets/75923078/a330623d-0c92-41dc-95b8-8f152afb1fac" width="300" height="200" />   
+<img src="https://github.com/howon-ryu/STUDYLAB/assets/75923078/f52d9bcc-9e05-4475-9b9b-64539565dcdf" width="300" height="200" />   
 
 학생별 학습 계획을 확인하고 이력을 변경합니다.
 studylab student에서 학생이 설정한 계획을 확인하고 변경 및 추가 할 수 있습니다.
@@ -110,14 +111,14 @@ studylab student에서 학생이 설정한 계획을 확인하고 변경 및 추
 
 [학생학습이력]
 
-<img src="https://github.com/howon-ryu/studylab_console_php/assets/75923078/8b8334aa-4c98-4582-850c-65b1dfe65ef7" width="300" height="200" />   
+<img src="https://github.com/howon-ryu/STUDYLAB/assets/75923078/9d286cd7-269c-4548-8d82-b0c7ebfd0538" width="300" height="200" />   
 
 기간에 따른 학생별 학습 이력 요약을 확인할 수 있습니다.
 지난 학습에 대한 요약을 제공하며 레포트 보기를 통해 studylab student 와 같은 해당 학생의 학습 레포트를 볼수 있습니다.
 
 
 
-<img src="https://github.com/howon-ryu/studylab_console_php/assets/75923078/478699f0-dee5-4df2-bd27-c2ecebee6240" width="300" height="200" />   
+<img src="https://github.com/howon-ryu/STUDYLAB/assets/75923078/c096eb6b-9611-4b3f-ad14-d1ed8af8f236" width="300" height="200" />   
 
 학생들의 학습과목, 만족도, 순공 시간/비율 등을 차트와 캘린더를 통해서 확인할 수 있습니다.
 일/주/월 별로 누적된 공부 시간을 볼 수 있으며, amchart를 통한 가시적인 통계를 제공합니다.
