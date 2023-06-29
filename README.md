@@ -6,7 +6,6 @@
   
 ![version](https://img.shields.io/badge/version-0.4.0-blue.svg) 
 
-![Image](https://github.com/howon-ryu/studylab_console_php/assets/75923078/4b20a260-8e74-4354-90e8-7b66dfd75bc2)
 
 studylab console 는 php 와 html/js/css를 기반으로 하는 스터티카페 관리자 페이지입니다.  
 계층형 관리자 구조로 되어있으며 학생들을 관리하는 관리자(head,owner,manager)와 브랜드를 만들고 학생들의 일정을 관리할수 있는 studylab 백오피스 입니다.
@@ -33,14 +32,14 @@ studylab console 는 php 와 html/js/css를 기반으로 하는 스터티카페 
   
 [본사관리]  
 
-<img src="https://github.com/howon-ryu/studylab_console_php/assets/75923078/148fb669-465e-47dd-af36-c9dd4452c19a" width="300" height="200" />   
+<img src="https://github.com/howon-ryu/STUDYLAB/assets/75923078/485c479f-35d8-49db-a506-2494692f9f92" width="300" height="200" />   
   
 본사(brand)와 본사관리자(head)를 생성하고 변경사항을 관리합니다.
 
 
 [원장관리]
 
-<img src="https://github.com/howon-ryu/studylab_console_php/assets/75923078/e57aa128-ee59-41f4-9703-c8d43fe1b584" width="300" height="200" />   
+<img src="https://github.com/howon-ryu/STUDYLAB/assets/75923078/6ce4d8f3-956a-4fdd-85d7-ec8397913dc9" width="300" height="200" />   
 
 원장(owner)를생성하고 관리합니다.
 원장은 반드시 한개의 본사에 소속되어있어야 하며 해당 브랜드의 head가 변경 권한을 갖습니다.
@@ -48,7 +47,7 @@ studylab console 는 php 와 html/js/css를 기반으로 하는 스터티카페 
 
 [매니저관리]
 
-<img src="https://github.com/howon-ryu/studylab_console_php/assets/75923078/7a5d0691-ccb8-4aa9-888f-654d13f03a6d" width="300" height="200" />   
+<img src="https://github.com/howon-ryu/STUDYLAB/assets/75923078/1464df1f-4c7b-45b5-be71-99a7cdd36a65" width="300" height="200" />   
 
 매니저(manager)를생성하고 관리합니다.
 매니저는 반드시 한개의 본사에 소속되어있으며 원장을 target으로 소속되어있습니다.
