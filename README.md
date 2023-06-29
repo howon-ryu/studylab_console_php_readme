@@ -89,6 +89,7 @@ studylab timer 에 로그인할 id/pw와 학생정보를 입력합니다.
 날짜별로 지점 소속학생들의 학습 정보를 확인할수 있습니다.
 실제 학습실의 맨 앞에 스크린에서 보여줄 리더보드를 열수 있습니다.
 
+<리더보드>
 
 <img src="https://github.com/howon-ryu/STUDYLAB/assets/75923078/32d4d60c-682c-46a6-be38-b6f395458c44" width="300" height="200" />   
 <img src="https://github.com/howon-ryu/STUDYLAB/assets/75923078/c3e79456-a9e3-49b0-afad-acce74b6c155" width="300" height="200" />   
@@ -96,6 +97,11 @@ studylab timer 에 로그인할 id/pw와 학생정보를 입력합니다.
 slick.js를 이용하여 만들었으며 정해진 시간에 따라서 오른쪽으로 slide 합니다.
 학습실의 좌석배치도와 학습인원수에 따라서 좌석 배열을 변경 할 수 있고, 현재 학습시간과 출석, 순공 비율을 한눈에 확인할 수 있습니다.
 마지막 시트에서는 전체 학생들의 순위및 요약을 차트로 제공합니다.
+
+<aimon>
+
+<img src="https://github.com/howon-ryu/STUDYLAB/assets/75923078/7f920349-38e1-482c-989c-03cf7907e7c4" width="300" height="200" />  
+
 
 
 [학생학습계획]
